@@ -1,0 +1,20 @@
+{
+  "name": "js_project",
+  "version": "1.0.0",
+  "description": "JavaScript project",
+  "author": "Ryan Tran",
+  "license": "ISC",
+  "main": "index.html",
+  "scripts": {
+    "postinstall": "webpack --mode=production",
+    "start": "webpack --watch --mode=development"
+  },
+  "dependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {}
+}
