@@ -5,12 +5,13 @@ export default class Player {
     this.game = game;
     this.ctx = ctx;
     this.x = 0;
-    this.y = 600 - sprite.height * 3;
+    this.y = 662; // 662
+    // this.y = 793 - sprite.height * 3 - 20; // 662
     this.land = true;
     this.ground = this.y;
     this.jumping = false;
-    this.jumpSpeed = 50;
-    this.gravity = 5;
+    this.jumpSpeed = 35;
+    this.gravity = 3;
     this.running = false;
     this.runDirection = '';
     this.runSpeed = 20;
@@ -37,7 +38,7 @@ export default class Player {
       if (this.y >= this.ground) {
         this.y = this.ground;
         this.land = true;
-        this.jumpSpeed = 50;
+        this.jumpSpeed = 35;
         this.jumping = false;
       }
     }

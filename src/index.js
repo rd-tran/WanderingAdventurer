@@ -2,8 +2,8 @@ import Game from './game';
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('gameDisplay');
-  canvas.width = 1000;
-  canvas.height = 600;
+  canvas.width = 928;
+  canvas.height = 793;
   const ctx = canvas.getContext('2d');
 
   const game = new Game(ctx);
