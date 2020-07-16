@@ -29,15 +29,24 @@ export default class Game {
     this.player = new Player(this, ctx, characterImg);
     this.characterSprite = new Character(this.ctx, this.player, characterImg);
     this.controller = new Controller(this.player);
-    this.background = new Background(this.ctx);
     this.createObject(new Enemy(this.ctx));
-
-    window.addEventListener('keydown', (e) => {
-      this.controller.keyDown(e)
-    });
-    window.addEventListener('keyup', (e) => {
-      this.controller.keyUp(e)
-    });
+    this.background = new Background(this.ctx, this);
+    this.gameOver = false;
+    
+    this.keyDownListener = (e) => {
+      this.controller.keyDown(e);
+    };
+    this.keyUpListener = (e) => {
+      this.controller.keyUp(e);
+    };
+    document.addEventListener('keydown', this.keyDownListener);
+    document.addEventListener('keyup', this.keyUpListener);
+    // document.addEventListener('keydown', (e) => {
+    //   this.controller.keyDown(e)
+    // });
+    // document.addEventListener('keyup', (e) => {
+    //   this.controller.keyUp(e)
+    // });
   }
 
   // keyDown(e) {
@@ -88,30 +97,13 @@ export default class Game {
     }
   }
 
-  animate(timeStamp = 0) {
-    const animationDelay = timeStamp - this.animationDelayStart;
-    const spawnDelay = timeStamp - this.spawnDelayStart;
-    const increaseSpawnRate = (timeStamp - this.spawnTimeStart) >= 15000;
-    if (increaseSpawnRate && this.spawnRate !== 1000) {
-      this.spawnRate -= 250;
-      this.spawnTimeStart = timeStamp;
-    }
-
-    if (spawnDelay >= this.spawnRate) {
-      this.spawnDelayStart = timeStamp;
-      this.createObject(new Enemy(this.ctx));
-    }
-
-    if (animationDelay >= 32) {
-      this.animationDelayStart = timeStamp;
-      this.ctx.clearRect(0, 0, 928, 793);
-      this.background.animate();
-
+  animateArrows() {
+    if (!this.gameOver) {
       for (let i = 0; i < this.arrows.length; i++) {
         const arrow = this.arrows[i];
         if (arrow.isOffMap()) {
           this.removeObjecct(arrow);
-           i -= 1;
+          i -= 1;
         } else {
           let continueAnimation = true;
 
@@ -134,19 +126,30 @@ export default class Game {
           }
         }
       }
-      
+    }
+  }
+  
+  animateEnemies() {
+    if (!this.gameOver) {
       for (let i = 0; i < this.enemies.length; i++) {
         const enemy = this.enemies[i];
         if (enemy.isOffMap()) {
           this.removeObjecct(enemy);
-           i -= 1;
+          i -= 1;
         // } else if (enemy.isCollideWith(this.player)) {
         //   break;
+        } else if (enemy.isCollideWith(this.player)) {
+          this.gameOver = true;
+          break;
         } else {
           enemy.animate()
         }
       }
+    }
+  }
 
+  animateExplosions() {
+    if (!this.gameOver) {
       for (let i = 0; i < this.explosions.length; i++) {
         const explosion = this.explosions[i];
         explosion.animate();
@@ -154,12 +157,54 @@ export default class Game {
           this.removeObjecct(explosion);
         }
       }
-
-      this.characterSprite.animate(timeStamp);
     }
-    
-    this.reqId = requestAnimationFrame((timeStamp) => {
-      this.animate(timeStamp);
-    });
+  }
+
+  animate(timeStamp = 0) {
+    if (!this.gameOver) {
+      const animationDelay = timeStamp - this.animationDelayStart;
+      const spawnDelay = timeStamp - this.spawnDelayStart;
+      // const increaseSpawnRate = (timeStamp - this.spawnTimeStart) >= 500;
+      const increaseSpawnRate = (timeStamp - this.spawnTimeStart) >= 15000;
+      if (increaseSpawnRate && this.spawnRate !== 1000) {
+        this.spawnRate -= 250;
+        this.spawnTimeStart = timeStamp;
+      } /* else if (this.spawnRate === 1000) {
+        this.gameOver = true;
+      } */
+
+      if (spawnDelay >= this.spawnRate) {
+        this.spawnDelayStart = timeStamp;
+        this.createObject(new Enemy(this.ctx));
+      }
+
+      if (animationDelay >= 32) {
+        this.animationDelayStart = timeStamp;
+        this.ctx.clearRect(0, 0, 928, 793);
+        this.background.animate();
+        this.animateArrows();
+        this.animateEnemies();
+        this.animateExplosions();
+        this.characterSprite.animate(timeStamp);
+      }
+      
+      this.reqId = requestAnimationFrame((timeStamp) => {
+        this.animate(timeStamp);
+      });
+    } else {
+      this.player.die();
+      const animationDelay = timeStamp - this.animationDelayStart;
+      if (animationDelay >= 45) {
+        this.animationDelayStart = timeStamp;
+        this.ctx.clearRect(0, 0, 928, 793);
+        this.background.animate();
+        this.characterSprite.animate(timeStamp);
+      }
+      document.removeEventListener('keydown', this.keyDownListener);
+      document.removeEventListener('keyup', this.keyUpListener);
+      this.reqId = requestAnimationFrame((timeStamp) => {
+        this.animate(timeStamp);
+      });
+    }
   }
 }

@@ -1,9 +1,9 @@
 export default class Background {
-  constructor(ctx) {
+  constructor(ctx, game) {
     this.ctx = ctx;
-    this.ctx = ctx;
+    this.game = game;
     this.layers = [
-      {xPos: 0, speed: -9, image: new Image()},
+      {xPos: 0, speed: -8, image: new Image()},
       {xPos: 0, speed: -7, image: new Image()},
       {xPos: 0, speed: -7, image: new Image()},
       {xPos: 0, speed: -6, image: new Image()},
@@ -35,6 +35,16 @@ export default class Background {
       ctx.drawImage(this.layers[i].image,
         this.layers[i].xPos, 0, width, height
       );
+
+      if (this.game.gameOver) {
+        if (this.layers[i].speed < 0) {
+          this.layers[i].speed =
+            this.layers[i].speed - (this.layers[i].speed * .05);
+          if (this.layers[i].speed > 0) {
+            this.layers[i].speed = 0;
+          }
+        }
+      }
       
       this.layers[i].xPos += this.layers[i].speed;
       if (this.layers[i].xPos <= -(width/2)) {

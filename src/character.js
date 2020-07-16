@@ -14,7 +14,9 @@ export default class Character {
     this.animation = 'idle';
     this.frameSets = {
       idle: [ [0, 0], [0, 0], [0, 1], [0, 1], [0, 2], [0, 2], [0, 3], [0, 3] ],
-      crouch: [ [0, 4], [0, 4], [0, 5], [0, 5], [0, 6], [0, 6], [1, 0], [1, 0] ],
+      crouch: [
+        [0, 4], [0, 4], [0, 5], [0, 5], [0, 6], [0, 6], [1, 0], [1, 0]
+      ],
       run: [
         [1, 1], [1, 1], [1, 2], [1, 2], [1, 3], [1, 3], [1, 4], [1, 4],
         [1, 5],[1, 5], [1, 6], [1, 6] ],
@@ -26,6 +28,23 @@ export default class Character {
       shoot: [
         [0, 0], [0, 1], [0, 2],
         [2, 1], [2, 2], [2, 3], [3, 0], [3, 1], [1, 3], [1, 3], [1, 3], [3, 2]
+      ],
+      die: [
+        [8, 6], [8, 6],
+        [9, 0], [9, 0],
+        [9, 1], [9, 1], [9, 1],
+        [9, 2], [9, 2], [9, 2],
+        [9, 3], [9, 3], [9, 3], [9, 3], [9, 3],
+        [9, 4], [9, 4], [9, 4], [9, 4], [9, 4],
+        [9, 5], [9, 5], [9, 5], [9, 5], [9, 5],
+        [9, 3], [9, 3], [9, 3], [9, 3], [9, 3], [9, 3],
+        [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4],
+        [9, 5], [9, 5], [9, 5], [9, 5], [9, 5], [9, 5], 
+        [9, 3], [9, 3], [9, 3], [9, 3], [9, 3], [9, 3], [9, 3],
+        [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4],
+        [9, 5], [9, 5], [9, 5], [9, 5], [9, 5], [9, 5], [9, 5],
+        [9, 3], [9, 3], [9, 3], [9, 3], [9, 3], [9, 3], [9, 3], [9, 3],
+        [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4]
       ]
     };
   }
@@ -53,7 +72,7 @@ export default class Character {
       this.frameIndex += 1;
       if (this.frameIndex === frameSets[this.animation].length) {
         this.player.shooting = false;
-        if (this.player.jumping && !this.player.land) {
+        if (this.player.jumping) {
           this.changeAnimation('jump');
           this.frameIndex = frameSets['jump'].length - 1;
         } else {
@@ -62,10 +81,18 @@ export default class Character {
       } else if (this.frameIndex === frameSets[this.animation].length - 5) {
         this.player.shoot();
       }
+    } else if (this.animation === 'die') {
+      if (this.frameIndex < frameSets['die'].length - 1) {
+        this.frameIndex += 1;
+        console.log(this.frameIndex);
+      } else {
+        this.frameIndex = frameSets['die'].length - 1;
+      }
     } else {
-      this.frameIndex = (this.frameIndex + 1) % frameSets[this.animation].length;
+      this.frameIndex = (this.frameIndex + 1) %
+                        frameSets[this.animation].length;
     }
-    
+    console.log(frameSets[this.animation][this.frameIndex])
     const [yInd, xInd] = frameSets[this.animation][this.frameIndex];
     this.srcX = xInd * width;
     this.srcY = yInd * height;
@@ -75,8 +102,12 @@ export default class Character {
 
   animate() {
     const { useImg, srcX, srcY, width, height, player } = this;
-    
-    if (player.jumping) {
+
+    if (player.dead) {
+      if (!player.jumping && player.land) {
+        this.changeAnimation('die');
+      }
+    } else if (player.jumping) {
       const shootOrJump = player.shooting ? 'shoot' : 'jump';
       this.changeAnimation(shootOrJump);
     } else if (player.shooting) {
@@ -89,15 +120,11 @@ export default class Character {
       this.changeAnimation('idle');
     }
 
-    if (player.land) {
-      this.frameIndex = 0;
-      player.land = false;
-    }
-
     this.ctx.drawImage(useImg,
       srcX, srcY, width, height,
       player.x, player.y, width * 3, height * 3
     );
+    console.log('Player is on land', player.land)
     this.updateFrame();
   }
 }

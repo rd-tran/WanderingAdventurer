@@ -7,9 +7,9 @@ export default class Enemy {
     this.speed = 15;
     this.neutralMoveSpeed = 10;
     this.attackMoveSpeed = 15;
-    this.jumpSpeed = 20;
-    this.neutralJumpSpeed = 20;
-    this.attackJumpSpeed = 23;
+    this.jumpSpeed = 25;
+    this.neutralJumpSpeed = 25;
+    this.attackJumpSpeed = 28;
     this.gravity = 3;
     this.ground = 678;
     this.land = true;
