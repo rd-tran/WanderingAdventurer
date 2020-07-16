@@ -9,10 +9,6 @@ export default class Arrow {
     this.image.src = './assets/arrow.png';
     this.width = 48;
     this.height = 21;
-    this.xHitboxFront = this.x + this.width;
-    this.xHitboxBack = this.x + this.width - 10;
-    this.yHitboxTop = this.y;
-    this.yHitboxBottom = this.y + this.height;
   }
 
   isOffMap() {
@@ -28,11 +24,20 @@ export default class Arrow {
                       this.xHitboxFront <= enemy.xHitboxBack;
     const backClip = this.xHitboxBack >= enemy.xHitboxFront &&
                      this.xHitboxBack <= enemy.xHitboxBack;
+    // debugger
     return (topClip || bottomClip) && (frontClip || backClip);
+  }
+  
+  updateHitBox() {
+    this.xHitboxFront = this.x + this.width;
+    this.xHitboxBack = this.x + this.width - 10;
+    this.yHitboxTop = this.y;
+    this.yHitboxBottom = this.y + this.height;
   }
   
   updateFrame() {
     this.x += this.speed;
+    this.updateHitBox();
   }
 
   animate() {

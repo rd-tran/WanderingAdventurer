@@ -23,10 +23,10 @@ export default class Player {
   run() {
     if (this.running) {
       if (this.runDirection === 'forward') {
-        this.x += this.runSpeed;
+        this.x = this.x + this.runSpeed >= 828 ? 828 : this.x + this.runSpeed;
       }
       if (this.runDirection === 'backward') {
-        this.x -= this.runSpeed;
+        this.x = this.x - this.runSpeed <= -50 ? -50 : this.x - this.runSpeed;
       }
     }
   }

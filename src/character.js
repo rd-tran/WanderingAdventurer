@@ -74,29 +74,29 @@ export default class Character {
   }
 
   animate() {
-    const { useImg, srcX, srcY, width, height } = this;
+    const { useImg, srcX, srcY, width, height, player } = this;
     
-    if (this.player.jumping) {
-      const shootOrJump = this.player.shooting ? 'shoot' : 'jump';
+    if (player.jumping) {
+      const shootOrJump = player.shooting ? 'shoot' : 'jump';
       this.changeAnimation(shootOrJump);
-    } else if (this.player.shooting) {
+    } else if (player.shooting) {
       this.changeAnimation('shoot');
-    } else if (this.player.running) {
+    } else if (player.running) {
       this.changeAnimation('run');
-    } else if (this.player.crouching) {
+    } else if (player.crouching) {
       this.changeAnimation('crouch');
     } else {
       this.changeAnimation('idle');
     }
 
-    if (this.player.land) {
+    if (player.land) {
       this.frameIndex = 0;
-      this.player.land = false;
+      player.land = false;
     }
 
     this.ctx.drawImage(useImg,
       srcX, srcY, width, height,
-      this.player.x, this.player.y, width * 3, height * 3
+      player.x, player.y, width * 3, height * 3
     );
     this.updateFrame();
   }
