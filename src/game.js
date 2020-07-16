@@ -91,9 +91,9 @@ export default class Game {
   animate(timeStamp = 0) {
     const animationDelay = timeStamp - this.animationDelayStart;
     const spawnDelay = timeStamp - this.spawnDelayStart;
-    const increaseSpawnRate = (timeStamp - this.spawnTimeStart) >= 25000;
-    if (increaseSpawnRate) {
-      this.spawnRate = this.spawnRate <= 800 ? 800 : this.spawnRate - 500;
+    const increaseSpawnRate = (timeStamp - this.spawnTimeStart) >= 15000;
+    if (increaseSpawnRate && this.spawnRate !== 1000) {
+      this.spawnRate -= 250;
       this.spawnTimeStart = timeStamp;
     }
 

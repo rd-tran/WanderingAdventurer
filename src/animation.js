@@ -13,7 +13,7 @@ export default class Animation {
   }
 
   change(frameSet, delay = 15) {
-    if (this.frameSet != frameSet) {
+    if (this.frameSet !== frameSet) {
       this.count = 0;
       this.delay = delay;
       this.frameIndex = 0;

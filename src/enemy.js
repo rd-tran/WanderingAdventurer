@@ -1,7 +1,7 @@
 export default class Enemy {
   constructor(ctx) {
     this.ctx = ctx;
-    this.x = 923 + Math.floor(Math.random() * 50);
+    this.x = 923 + 50 + Math.floor(Math.random() * 100);
     this.y = 793 - 125 - Math.floor(Math.random() * 50);
     this.srcX = 0;
     this.speed = 15;
