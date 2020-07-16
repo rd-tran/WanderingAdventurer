@@ -1,8 +1,8 @@
 export default class Enemy {
   constructor(ctx) {
     this.ctx = ctx;
-    this.x = 923 + 50 + Math.floor(Math.random() * 100);
-    this.y = 793 - 125 - Math.floor(Math.random() * 50);
+    this.x = 923 + 50 + Math.floor(Math.random() * 200);
+    this.y = 793 - 125 + Math.floor(Math.random() * 100);
     this.srcX = 0;
     this.speed = 15;
     this.neutralMoveSpeed = 10;
@@ -68,9 +68,9 @@ export default class Enemy {
 
   updateHitBox() {
     this.xHitboxFront = this.x + 3;
-    this.xHitboxBack = this.x + (this.width - 3) * 3;
+    this.xHitboxBack = this.x + ((this.width - 3) * 2);
     this.yHitboxTop = this.y;
-    this.yHitboxBottom = this.y + (this.height * 3);
+    this.yHitboxBottom = this.y + (this.height * 2);
   }
 
   updateFrame() {
@@ -97,7 +97,7 @@ export default class Enemy {
       ctx.scale(-1, 1);
       ctx.drawImage(useImg,
         srcX, 0, width, height,
-        -x - width * 3, y, width * 3, height * 3
+        -x - width * 3, y, width * 2, height * 2
       );
       ctx.scale(-1, 1);
     }

@@ -6,7 +6,7 @@ export default class Controller {
       KeyA: false,
       KeyS: false,
       KeyD: false,
-      Space: false
+      KeyJ: false
       // KeyW: {active: false, timeStamp: 0},
       // KeyA: {active: false, timeStamp: 0},
       // KeyS: {active: false, timeStamp: 0},
@@ -30,13 +30,13 @@ export default class Controller {
         this.player.runDirection = 'backward';
       }
       if (this.keys['KeyS']) {
-        this.player.crouching = true;
+        this.player.sliding = true;
       }
       if (this.keys['KeyD']) {
         this.player.running = true;
         this.player.runDirection = 'forward';
       }
-      if (this.keys['Space']) {
+      if (this.keys['KeyJ']) {
         this.player.shooting = true;
       }
     }
@@ -90,7 +90,7 @@ export default class Controller {
       this.player.running = false;
     }
     if (!this.keys['KeyS']) {
-      this.player.crouching = false;
+      this.player.sliding = false;
     }
     // if (!this.keys['KeyA'].active && !this.keys['KeyD'].active) {
     //   this.player.running = false;

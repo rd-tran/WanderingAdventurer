@@ -15,7 +15,7 @@ export default class Player {
     this.running = false;
     this.runDirection = '';
     this.runSpeed = 20;
-    this.crouching = false;
+    this.sliding = false;
     this.shooting = false;
     this.idle = true;
     this.dead = false;
@@ -61,6 +61,12 @@ export default class Player {
         this.jumpSpeed = 35;
         this.jumping = false;
       }
+    }
+  }
+
+  slide() {
+    if (this.sliding) {
+      this.x = this.x + this.runSpeed >= 828 ? 828 : this.x + this.runSpeed;
     }
   }
 

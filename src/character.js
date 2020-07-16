@@ -13,13 +13,28 @@ export default class Character {
     this.height = sprite.height;
     this.animation = 'idle';
     this.frameSets = {
-      idle: [ [0, 0], [0, 0], [0, 1], [0, 1], [0, 2], [0, 2], [0, 3], [0, 3] ],
-      crouch: [
-        [0, 4], [0, 4], [0, 5], [0, 5], [0, 6], [0, 6], [1, 0], [1, 0]
+      idle: [
+        [5, 3], [5, 3], [5, 3],
+        [5, 4], [5, 4], [5, 4],
+        [5, 5], [5, 5], [5, 5],
+        [5, 6], [5, 6], [5, 6]
+      ],
+      // idle: [ [0, 0], [0, 0], [0, 1], [0, 1], [0, 2], [0, 2], [0, 3], [0, 3] ],
+      slide: [
+        [3, 3], [3, 3], [3, 3],
+        [3, 4], [3, 4], [3, 4],
+        [3, 5], [3, 5], [3, 5],
+        [3, 6], [3, 6], [3, 6],
+        [4, 1], [4, 1], [4, 1]
       ],
       run: [
-        [1, 1], [1, 1], [1, 2], [1, 2], [1, 3], [1, 3], [1, 4], [1, 4],
-        [1, 5],[1, 5], [1, 6], [1, 6] ],
+        [0, 7], [0, 7], [0, 8], [0, 8], [0, 9], [0, 9], [0, 10], [0, 10],
+        [0, 11],[0, 11], [0, 12], [0, 12]
+      ],
+      // run: [
+      //   [1, 1], [1, 1], [1, 2], [1, 2], [1, 3], [1, 3], [1, 4], [1, 4],
+      //   [1, 5],[1, 5], [1, 6], [1, 6]
+      // ],
       jump: [
         [2, 0], [2, 1], [2, 1], [2, 2], [2, 2], [2, 3], [2, 3], [2, 4], [2, 4],
         [2, 5], [2, 5], [2, 6], [2, 6], [3, 0], [3, 0], [3, 1], [3, 1], [3, 2],
@@ -98,6 +113,7 @@ export default class Character {
     this.srcY = yInd * height;
     this.player.run();
     this.player.jump();
+    this.player.slide();
   }
 
   animate() {
@@ -114,14 +130,14 @@ export default class Character {
       this.changeAnimation('shoot');
     } else if (player.running) {
       this.changeAnimation('run');
-    } else if (player.crouching) {
-      this.changeAnimation('crouch');
+    } else if (player.sliding) {
+      this.changeAnimation('slide');
     } else {
       this.changeAnimation('idle');
     }
 
     this.ctx.drawImage(useImg,
-      srcX, srcY, width, height,
+      srcX, srcY, width - 1, height - 1,
       player.x, player.y, width * 3, height * 3
     );
     console.log('Player is on land', player.land)

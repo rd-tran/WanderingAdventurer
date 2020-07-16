@@ -20,7 +20,7 @@ export default class Game {
       // width: 1400 / 7,
       // height: 2368 / 16
     };
-    characterImg.image.src = './assets/adventurer-Sheet.png';
+    characterImg.image.src = './assets/adventurer-test.png';
     characterImg.image2.src = './assets/adventurer-bow-Sheet.png';
   
     this.arrows = [];
@@ -136,8 +136,8 @@ export default class Game {
         if (enemy.isOffMap()) {
           this.removeObjecct(enemy);
           i -= 1;
-        // } else if (enemy.isCollideWith(this.player)) {
-        //   break;
+        } else if (enemy.isCollideWith(this.player)) {
+          break;
         } else if (enemy.isCollideWith(this.player)) {
           this.gameOver = true;
           break;
