@@ -6,7 +6,7 @@ export default class Explosion {
     this.srcX = 0;
     this.image = enemy.image2;
     this.frameIndex = 0;
-    this.frameSets = [ 
+    this.frameSets = [
       [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5],[0, 6], [0, 7],[0, 8],
       [0, 9], [0, 10], [0, 11]
      ];

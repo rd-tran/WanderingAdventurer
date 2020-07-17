@@ -1,8 +1,8 @@
 export default class Enemy {
   constructor(ctx) {
     this.ctx = ctx;
-    this.x = 923 + 50 + Math.floor(Math.random() * 200);
-    this.y = 793 - 125 + Math.floor(Math.random() * 100);
+    this.x = 923 + 200 + Math.floor(Math.random() * 200);
+    this.y = 793 - 125 - Math.floor(Math.random() * 100);
     this.srcX = 0;
     this.speed = 15;
     this.neutralMoveSpeed = 10;
@@ -18,8 +18,10 @@ export default class Enemy {
     this.image2 = new Image();
     this.image2.src = './assets/explosion-4.png';
     this.useImg = this.image;
-    this.width = 32;
-    this.height = 35;
+    this.srcWidth = 32;
+    this.srcHeight = 35;
+    this.width = this.srcWidth * 2;
+    this.height = this.srcHeight * 2;
     this.animation = 'idle';
     this.frameIndex = 0;
     this.frameSets = {
@@ -35,7 +37,7 @@ export default class Enemy {
   }
 
   isOffMap() {
-    return this.x <= -this.width;
+    return this.x <= -this.srcWidth;
   }
   
   isCollideWith(player) {
@@ -50,6 +52,7 @@ export default class Enemy {
       this.jumpSpeed = this.neutralJumpSpeed;
       this.land = true;
     } else {
+      this.x -= this.speed;
       this.land = false;
     }
   }
@@ -67,10 +70,10 @@ export default class Enemy {
   }
 
   updateHitBox() {
-    this.xHitboxFront = this.x + 3;
-    this.xHitboxBack = this.x + ((this.width - 3) * 2);
+    this.xHitboxFront = this.x + 6;
+    this.xHitboxBack = this.x + ((this.width - 6));
     this.yHitboxTop = this.y;
-    this.yHitboxBottom = this.y + (this.height * 2);
+    this.yHitboxBottom = this.y + (this.height);
   }
 
   updateFrame() {
@@ -79,14 +82,15 @@ export default class Enemy {
     const [_, xInd] = frameSets[this.animation][this.frameIndex];
     this.srcX = xInd * width;
     if (this.animation !== 'die') {
-      this.x -= this.speed;
       this.jump();
       this.updateHitBox();
     }
   }
 
   animate() {
-    const { ctx, useImg, srcX, x, y, width, height } = this;
+    const {
+      ctx, useImg, srcX, x, y, srcWidth, srcHeight, width, height
+    } = this;
     
     if (this.animation === 'die') {
       ctx.drawImage(useImg,
@@ -96,8 +100,8 @@ export default class Enemy {
     } else {
       ctx.scale(-1, 1);
       ctx.drawImage(useImg,
-        srcX, 0, width, height,
-        -x - width * 3, y, width * 2, height * 2
+        srcX, 0, srcWidth, srcHeight,
+        -x - width, y, width, height
       );
       ctx.scale(-1, 1);
     }

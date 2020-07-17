@@ -4,13 +4,15 @@ export default class Character {
     this.player = player;
     this.cycle = 0;
     this.frameIndex = 0;
-    this.srcX = 0;
-    this.srcY = 0;
     this.useImg = sprite.image;
     this.image = sprite.image;
     this.image2 = sprite.image2;
-    this.width = sprite.width;
-    this.height = sprite.height;
+    this.srcX = 0;
+    this.srcY = 0;
+    this.srcWidth = sprite.width;
+    this.srcHeight = sprite.height;
+    this.width = player.width;
+    this.height = player.height;
     this.animation = 'idle';
     this.frameSets = {
       idle: [
@@ -77,7 +79,7 @@ export default class Character {
   }
   
   updateFrame() {
-    const { frameSets, width, height } = this;
+    const { frameSets, srcWidth, srcHeight } = this;
     if (this.animation === 'jump') {
       this.frameIndex += 1;
       if (this.frameIndex > frameSets[this.animation].length - 1) {
@@ -109,15 +111,17 @@ export default class Character {
     }
     console.log(frameSets[this.animation][this.frameIndex])
     const [yInd, xInd] = frameSets[this.animation][this.frameIndex];
-    this.srcX = xInd * width;
-    this.srcY = yInd * height;
+    this.srcX = xInd * srcWidth;
+    this.srcY = yInd * srcHeight;
     this.player.run();
     this.player.jump();
     this.player.slide();
   }
 
   animate() {
-    const { useImg, srcX, srcY, width, height, player } = this;
+    const {
+      useImg, srcX, srcY, srcWidth, srcHeight, width, height, player
+    } = this;
 
     if (player.dead) {
       if (!player.jumping && player.land) {
@@ -137,8 +141,8 @@ export default class Character {
     }
 
     this.ctx.drawImage(useImg,
-      srcX, srcY, width - 1, height - 1,
-      player.x, player.y, width * 3, height * 3
+      srcX, srcY, srcWidth - 1, srcHeight - 1,
+      player.x, player.y, width, height
     );
     console.log('Player is on land', player.land)
     this.updateFrame();

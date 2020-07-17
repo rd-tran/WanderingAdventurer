@@ -6,6 +6,8 @@ export default class Player {
     this.ctx = ctx;
     this.x = 0;
     this.y = 662; // 662
+    this.width = 50 * 3;
+    this.height = 37 * 3;
     // this.y = 793 - sprite.height * 3 - 20; // 662
     this.land = true;
     this.ground = this.y;
