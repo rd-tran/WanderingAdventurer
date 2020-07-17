@@ -11,6 +11,8 @@ export default class Character {
     this.srcY = 0;
     this.srcWidth = sprite.width;
     this.srcHeight = sprite.height;
+    // this.frameWidth = player.frameWidth;
+    // this.frameHeight = player.frameHeight;
     this.width = player.width;
     this.height = player.height;
     this.animation = 'idle';
@@ -21,26 +23,21 @@ export default class Character {
         [5, 5], [5, 5], [5, 5],
         [5, 6], [5, 6], [5, 6]
       ],
-      // idle: [ [0, 0], [0, 0], [0, 1], [0, 1], [0, 2], [0, 2], [0, 3], [0, 3] ],
+      run: [
+        [0, 7], [0, 7], [0, 8], [0, 8], [0, 9], [0, 9], [0, 10], [0, 10],
+        [0, 11],[0, 11], [0, 12], [0, 12]
+      ],
+      jump: [
+        [2, 0], [2, 0], [2, 1], [2, 1], [2, 2], [2, 2], [2, 3], [2, 3],
+        [2, 4], [2, 4], [2, 5], [2, 5], [2, 6], [2, 6], [3, 0], [3, 0],
+        [3, 1], [3, 1], [3, 2], [3, 2]
+      ],
       slide: [
         [3, 3], [3, 3], [3, 3],
         [3, 4], [3, 4], [3, 4],
         [3, 5], [3, 5], [3, 5],
         [3, 6], [3, 6], [3, 6],
         [4, 1], [4, 1], [4, 1]
-      ],
-      run: [
-        [0, 7], [0, 7], [0, 8], [0, 8], [0, 9], [0, 9], [0, 10], [0, 10],
-        [0, 11],[0, 11], [0, 12], [0, 12]
-      ],
-      // run: [
-      //   [1, 1], [1, 1], [1, 2], [1, 2], [1, 3], [1, 3], [1, 4], [1, 4],
-      //   [1, 5],[1, 5], [1, 6], [1, 6]
-      // ],
-      jump: [
-        [2, 0], [2, 1], [2, 1], [2, 2], [2, 2], [2, 3], [2, 3], [2, 4], [2, 4],
-        [2, 5], [2, 5], [2, 6], [2, 6], [3, 0], [3, 0], [3, 1], [3, 1], [3, 2],
-        [3, 2]
       ],
       shoot: [
         [0, 0], [0, 1], [0, 2],
@@ -64,6 +61,43 @@ export default class Character {
         [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4], [9, 4]
       ]
     };
+    this.adjHboxPos = { // [xHboxFront, xHboxBack, yHboxTop, yHboxBottom]
+      idle: [
+        [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0],
+        [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0],
+        [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0],
+        [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0]
+      ],
+      run: [
+        [-15, 20, 10, 0], [-15, 20, 10, 0], [-15, 21, 10, 0], [-15, 21, 10, 0],
+        [-15, 24, 10, 0], [-15, 24, 10, 0], [-15, 20, 10, 0], [-15, 20, 10, 0],
+        [-15, 21, 10, 0], [-15, 21, 10, 0], [-15, 24, 10, 0], [-15, 24, 10, 0],
+      ],
+      jump: [
+        [-15, 15, 12, 0], [-15, 15, 12, 0],
+        [-17, 15, 12, 0], [-17, 15, 12, 0],
+        [-15, 20, 7, -2], [-15, 20, 7, -2],
+        [-15, 15, 7, -8], [-15, 15, 7, -8],
+        [-15, 22, 7, -8], [-15, 22, 7, -8],
+        [-13, 15, 14, -9], [-13, 15, 14, -9],
+        [-17, 20, 11, -6], [-17, 20, 11, -6],
+        [-17, 15, 13, 10], [-17, 15, 13, 10],
+        [-16, 23, 7, -4], [-16, 23, 7, -4],
+        [-16, 23, 7, -4], [-16, 23, 7, -4]
+      ],
+      slide: [
+        [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0],
+        [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0],
+        [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0],
+        [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0]
+      ],
+      shoot: [
+        [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0],
+        [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0],
+        [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0], [-17, 10, 10, 0],
+      ],
+      die: [-17, 10, 10, 0]
+    };
   }
 
   changeAnimation(animation) {
@@ -77,13 +111,26 @@ export default class Character {
       }
     }
   }
+
+  updateHitbox() {
+    this.xHitboxFront = 
+      this.player.x + this.width + 
+      (this.adjHboxPos[this.animation][this.frameIndex][0] * 3);
+    this.xHitboxBack =
+      this.player.x + (this.adjHboxPos[this.animation][this.frameIndex][1] * 3);
+    this.yHitboxTop =
+      this.player.y + (this.adjHboxPos[this.animation][this.frameIndex][2] * 3);
+    this.yHitboxBottom =
+      this.player.y + this.height +
+      (this.adjHboxPos[this.animation][this.frameIndex][3] * 3);
+  }
   
   updateFrame() {
     const { frameSets, srcWidth, srcHeight } = this;
     if (this.animation === 'jump') {
       this.frameIndex += 1;
       if (this.frameIndex > frameSets[this.animation].length - 1) {
-        this.frameIndex = frameSets[this.animation].length - 1; 
+        this.frameIndex = frameSets[this.animation].length - 4; 
       }
     } else if (this.animation === 'shoot') {
       this.frameIndex += 1;
@@ -109,7 +156,7 @@ export default class Character {
       this.frameIndex = (this.frameIndex + 1) %
                         frameSets[this.animation].length;
     }
-    console.log(frameSets[this.animation][this.frameIndex])
+    
     const [yInd, xInd] = frameSets[this.animation][this.frameIndex];
     this.srcX = xInd * srcWidth;
     this.srcY = yInd * srcHeight;
@@ -140,11 +187,13 @@ export default class Character {
       this.changeAnimation('idle');
     }
 
+    if (this.animation !== 'die') {
+      this.updateHitbox();
+    }
     this.ctx.drawImage(useImg,
       srcX, srcY, srcWidth - 1, srcHeight - 1,
       player.x, player.y, width, height
     );
-    console.log('Player is on land', player.land)
     this.updateFrame();
   }
 }

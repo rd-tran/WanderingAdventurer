@@ -58,6 +58,7 @@ export default class Player {
       this.jumpSpeed -= this.gravity;
       this.land = false;
       if (this.y >= this.ground) {
+        this.x += 7;
         this.y = this.ground;
         this.land = true;
         this.jumpSpeed = 35;

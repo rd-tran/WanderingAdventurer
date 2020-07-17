@@ -136,8 +136,9 @@ export default class Game {
         if (enemy.isOffMap()) {
           this.removeObjecct(enemy);
           i -= 1;
-        } else if (enemy.isCollideWith(this.player)) {
-          break;
+        } else if (enemy.isCollideWith(this.characterSprite)) {
+          this.player.die();
+          this.gameOver = true;
         } else if (enemy.isCollideWith(this.player)) {
           this.gameOver = true;
           break;
@@ -192,7 +193,6 @@ export default class Game {
         this.animate(timeStamp);
       });
     } else {
-      this.player.die();
       const animationDelay = timeStamp - this.animationDelayStart;
       if (animationDelay >= 45) {
         this.animationDelayStart = timeStamp;

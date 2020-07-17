@@ -26,7 +26,7 @@ export default class Explosion {
 
     ctx.drawImage(image,
       srcX, 0, width, height,
-      this.x, this.y, width, height
+      this.x, this.y, width / 1.5, height / 1.5
     );
     this.updateFrame();
   }

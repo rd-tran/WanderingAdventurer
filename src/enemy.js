@@ -3,6 +3,8 @@ export default class Enemy {
     this.ctx = ctx;
     this.x = 923 + 200 + Math.floor(Math.random() * 200);
     this.y = 793 - 125 - Math.floor(Math.random() * 100);
+    // this.x = 200;
+    // this.y = 700;
     this.srcX = 0;
     this.speed = 15;
     this.neutralMoveSpeed = 10;
@@ -41,7 +43,19 @@ export default class Enemy {
   }
   
   isCollideWith(player) {
-    return false;
+    const topClip = this.yHitboxTop >= player.yHitboxTop &&
+                    this.yHitboxTop <= player.yHitboxBottom;
+    const bottomClip = this.yHitboxBottom >= player.yHitboxTop &&
+                       this.yHitboxTop <= player.yHitboxBottom;
+    const frontClip = this.xHitboxFront <= player.xHitboxFront &&
+                      this.xHitboxFront >= player.xHitboxBack;
+    const backClip = this.xHitboxBack <= player.xHitboxFront &&
+                     this.xHitboxBack >= player.xHitboxBack;
+    return (topClip || bottomClip) && (frontClip || backClip);
+  }
+
+  attack() {
+
   }
   
   jump() {
@@ -70,10 +84,10 @@ export default class Enemy {
   }
 
   updateHitBox() {
-    this.xHitboxFront = this.x + 6;
-    this.xHitboxBack = this.x + ((this.width - 6));
+    this.xHitboxFront = this.x + 20;
+    this.xHitboxBack = this.x + ((this.width - 10));
     this.yHitboxTop = this.y;
-    this.yHitboxBottom = this.y + (this.height);
+    this.yHitboxBottom = this.y + this.height;
   }
 
   updateFrame() {
@@ -83,7 +97,6 @@ export default class Enemy {
     this.srcX = xInd * width;
     if (this.animation !== 'die') {
       this.jump();
-      this.updateHitBox();
     }
   }
 
@@ -96,16 +109,16 @@ export default class Enemy {
       ctx.drawImage(useImg,
         srcX, 0, 128, 128,
         x, y, 128, 128
-      );
-    } else {
-      ctx.scale(-1, 1);
-      ctx.drawImage(useImg,
-        srcX, 0, srcWidth, srcHeight,
+        );
+      } else {
+        ctx.scale(-1, 1);
+        ctx.drawImage(useImg,
+          srcX, 0, srcWidth, srcHeight,
         -x - width, y, width, height
-      );
-      ctx.scale(-1, 1);
-    }
-
+        );
+        ctx.scale(-1, 1);
+      }
+    this.updateHitBox();
     this.updateFrame();
   }
 }
