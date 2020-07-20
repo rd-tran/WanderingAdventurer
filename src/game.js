@@ -30,8 +30,8 @@ export default class Game {
       width: 50,
       height: 37
     };
-    characterImg.image.src = '/assets/adventurer-Sheet.png';
-    characterImg.image2.src = '/assets/adventurer-bow-Sheet.png';
+    characterImg.image.src = 'assets/adventurer-Sheet.png';
+    characterImg.image2.src = 'assets/adventurer-bow-Sheet.png';
   
     this.arrows = [];
     this.enemies = [];

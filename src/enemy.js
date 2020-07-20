@@ -16,9 +16,9 @@ export default class Enemy {
     this.ground = 678;
     this.land = true;
     this.image = new Image();
-    this.image.src = '/assets/big-monster.png';
+    this.image.src = 'assets/big-monster.png';
     this.image2 = new Image();
-    this.image2.src = '/assets/explosion-4.png';
+    this.image2.src = 'assets/explosion-4.png';
     this.useImg = this.image;
     this.srcWidth = 32;
     this.srcHeight = 35;
