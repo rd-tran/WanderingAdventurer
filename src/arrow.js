@@ -7,7 +7,7 @@ export default class Arrow {
     this.srcX = 0;
     this.speed = this.player.runSpeed + 30;
     this.image = new Image();
-    this.image.src = '../assets/arrow.png';
+    this.image.src = './assets/arrow.png';
     this.srcWidth = 100;
     this.srcHeight = 30;
     this.width = this.srcWidth;
