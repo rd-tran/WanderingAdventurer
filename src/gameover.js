@@ -4,7 +4,7 @@ export default class GameOverScreen {
     this.game = game;
     this.alpha = 0;
     this.image = new Image();
-    this.image.src = './assets/GameOver.png';
+    this.image.src = '/assets/GameOver.png';
     this.width = 576;
     this.height = 432;
     this.srcX = 0;
