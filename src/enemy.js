@@ -3,7 +3,7 @@ export default class Enemy {
     this.ctx = ctx;
     this.x = 923 + 200 + Math.floor(Math.random() * 200);
     this.y = 793 - 125 - Math.floor(Math.random() * 100);
-    // this.x = 200;
+    // this.x = 130;
     // this.y = 700;
     this.srcX = 0;
     this.speed = 15;
@@ -51,6 +51,17 @@ export default class Enemy {
                       this.xHitboxFront >= player.xHitboxBack;
     const backClip = this.xHitboxBack <= player.xHitboxFront &&
                      this.xHitboxBack >= player.xHitboxBack;
+
+    // xHitboxFront + 27
+    // xHitboxBack + 7
+    // yHitboxTop - 36
+    // xHitboxFront + 36
+    // xHitboxBack + 0
+    // yHitboxTop - 29
+    // xHitboxFront + 48
+    // xHitboxBack + 0
+    // yHitboxTop - 24
+    
     return (topClip || bottomClip) && (frontClip || backClip);
   }
 

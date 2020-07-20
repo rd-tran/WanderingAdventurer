@@ -84,7 +84,7 @@ export default class Game {
     }
   }
 
-  removeObjecct(object) {
+  removeObject(object) {
     if (object.constructor.name === 'Arrow') {
       const idx = this.arrows.indexOf(object);
       this.arrows.splice(idx, 1);
@@ -102,7 +102,7 @@ export default class Game {
       for (let i = 0; i < this.arrows.length; i++) {
         const arrow = this.arrows[i];
         if (arrow.isOffMap()) {
-          this.removeObjecct(arrow);
+          this.removeObject(arrow);
           i -= 1;
         } else {
           let continueAnimation = true;
@@ -111,8 +111,8 @@ export default class Game {
             const enemy = this.enemies[j];
             if (arrow.isCollideWith(enemy)) {
               // debugger
-              this.removeObjecct(arrow);
-              this.removeObjecct(enemy);
+              this.removeObject(arrow);
+              this.removeObject(enemy);
               this.createObject(new Explosion(enemy, this.ctx));
               // enemy.changeAnimation('die');
               continueAnimation = false;
@@ -134,11 +134,16 @@ export default class Game {
       for (let i = 0; i < this.enemies.length; i++) {
         const enemy = this.enemies[i];
         if (enemy.isOffMap()) {
-          this.removeObjecct(enemy);
+          this.removeObject(enemy);
           i -= 1;
         } else if (enemy.isCollideWith(this.characterSprite)) {
-          this.player.die();
-          this.gameOver = true;
+          if (this.characterSprite.slashing) {
+            this.removeObject(enemy);
+            this.createObject(new Explosion(enemy, this.ctx));
+          } else {
+            this.player.die();
+            this.gameOver = true;
+          }
         } else if (enemy.isCollideWith(this.player)) {
           this.gameOver = true;
           break;
@@ -155,7 +160,7 @@ export default class Game {
         const explosion = this.explosions[i];
         explosion.animate();
         if (explosion.frameIndex >= explosion.frameSets.length) {
-          this.removeObjecct(explosion);
+          this.removeObject(explosion);
         }
       }
     }
@@ -194,7 +199,7 @@ export default class Game {
       });
     } else {
       const animationDelay = timeStamp - this.animationDelayStart;
-      if (animationDelay >= 45) {
+      if (animationDelay >= 32) {
         this.animationDelayStart = timeStamp;
         this.ctx.clearRect(0, 0, 928, 793);
         this.background.animate();

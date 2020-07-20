@@ -6,7 +6,8 @@ export default class Controller {
       KeyA: false,
       KeyS: false,
       KeyD: false,
-      KeyJ: false
+      KeyJ: false,
+      KeyK: false
       // KeyW: {active: false, timeStamp: 0},
       // KeyA: {active: false, timeStamp: 0},
       // KeyS: {active: false, timeStamp: 0},
@@ -26,18 +27,31 @@ export default class Controller {
         this.player.jumping = true;
       }
       if (this.keys['KeyA']) {
-        this.player.running = true;
-        this.player.runDirection = 'backward';
+        if (!this.player.sliding) {
+          this.player.running = true;
+          this.player.x -= this.player.runSpeed;
+          this.player.runDirection = 'backward';
+        }
       }
       if (this.keys['KeyS']) {
         this.player.sliding = true;
+        this.player.running = false;
       }
       if (this.keys['KeyD']) {
-        this.player.running = true;
-        this.player.runDirection = 'forward';
+        if (!this.player.sliding) {
+          this.player.running = true;
+          this.player.runDirection = 'forward';
+        }
       }
       if (this.keys['KeyJ']) {
-        this.player.shooting = true;
+        if (!this.player.shooting) {
+          this.player.attacking = true;
+        }
+      }
+      if (this.keys['KeyK']) {
+        if (!this.player.attacking) {
+          this.player.shooting = true;
+        }
       }
     }
     
@@ -79,11 +93,23 @@ export default class Controller {
         // }
       case 'KeyA':
         if (this.keys['KeyD']) {
+          this.player.running = true;
           this.player.runDirection = 'forward';
+        } else if (this.keys['KeyA']) {
+          this.player.running = true;
+          this.player.runDirection = 'backward';
         }
         // if (this.keys['KeyD'].active) {
         //   this.player.runDirection = 'forward';
         // }
+      case 'KeyS':
+        if (this.keys['KeyD']) {
+          this.player.running = true;
+          this.player.runDirection = 'forward';
+        } else if (this.keys['KeyA']) {
+          this.player.running = true;
+          this.player.runDirection = 'backward';
+        }
     }
 
     if (!this.keys['KeyA'] && !this.keys['KeyD']) {

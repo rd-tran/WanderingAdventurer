@@ -18,6 +18,7 @@ export default class Player {
     this.runDirection = '';
     this.runSpeed = 20;
     this.sliding = false;
+    this.attacking = false;
     this.shooting = false;
     this.idle = true;
     this.dead = false;
