@@ -19,23 +19,6 @@ export default class Game {
     this.gameChoice = this.gameOverScreen.keyDown;
   }
 
-  // keyDown(e) {
-  //   this.controller.keyDown(e)
-  // }
-  // keyUp(e) {
-  //   this.controller.keyDown(e)
-  // }
-  
-  // addKeyEvent() {
-  //   window.addEventListener('keydown', this.keyDown);
-  //   window.addEventListener('keyup', this.keyUp);
-  // }
-
-  // removeKeyEvent() {
-  //   window.removeEventListener('keydown', this.keyDown);
-  //   window.removeEventListener('keyup', this.keyUp);
-  // }
-
   start() {
     this.animationDelayStart = 0;
     this.spawnDelayStart = 0;
@@ -46,8 +29,6 @@ export default class Game {
       image2: new Image(),
       width: 50,
       height: 37
-      // width: 1400 / 7,
-      // height: 2368 / 16
     };
     characterImg.image.src = './assets/adventurer-Sheet.png';
     characterImg.image2.src = './assets/adventurer-bow-Sheet.png';

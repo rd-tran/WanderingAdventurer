@@ -15,15 +15,3 @@ document.addEventListener('DOMContentLoaded', () => {
     game.stop();
   }
 });
-
-// canvas.addEventListener('click', () => {
-  //   console.log("I'm clicking the canvas")
-  //   window.addEventListener('keydown', controller.move);
-  //   window.addEventListener('keyup', controller.idle);
-  // });
-
-  // window.addEventListener('blur', () => {
-  //   console.log('Canvas is blurred')
-  //   window.removeEventListener('keydown', controller.move);
-  //   window.removeEventListener('keyup', controller.idle);
-  // });

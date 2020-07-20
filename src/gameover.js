@@ -30,6 +30,7 @@ export default class GameOverScreen {
     } else if (e.code === 'Enter') {
       if (this.choice === 'yes') {
         this.game.start();
+        document.removeEventListener('keydown', this.game.gameChoice);
       }
     }
   }
@@ -57,7 +58,6 @@ export default class GameOverScreen {
     
     this.updateFrame();
     this.ctx.globalAlpha = this.alpha;
-    console.log(this.alpha);
     ctx.drawImage(this.image,
       srcX, 0, width, height,
       176, 180.5, width, height
