@@ -112,13 +112,13 @@ var Arrow = /*#__PURE__*/function () {
     this.y = player.y + this.player.height / 2;
     this.srcX = 0;
     this.speed = this.player.runSpeed + 30;
-    this.image = image.image; // this.image = new Image();
-    // this.image.src = 'assets/arrow.png';
+    this.image = image.image;
+    this.image = new Image();
+    this.image.src = '../assets/arrow.png'; // this.srcWidth = image.width;
+    // this.srcHeight = image.height;
 
-    this.srcWidth = image.width;
-    this.srcHeight = image.height; // this.srcWidth = 100;
-    // this.srcHeight = 30;
-
+    this.srcWidth = 100;
+    this.srcHeight = 30;
     this.width = this.srcWidth;
     this.height = this.srcHeight;
     this.frameIndex = 0;
@@ -253,16 +253,16 @@ var Background = /*#__PURE__*/function () {
       alpha: 0.70,
       image: new Image()
     }];
-    this.layers[0].image.src = 'assets/background/layer1.png';
-    this.layers[1].image.src = 'assets/background/layer2.png';
-    this.layers[2].image.src = 'assets/background/layer3.png';
-    this.layers[3].image.src = 'assets/background/layer4.png';
-    this.layers[4].image.src = 'assets/background/layer5.png';
-    this.layers[5].image.src = 'assets/background/layer6.png';
-    this.layers[6].image.src = 'assets/background/layer7.png';
-    this.layers[7].image.src = 'assets/background/layer8.png';
-    this.layers[8].image.src = 'assets/background/layer9.png';
-    this.layers[9].image.src = 'assets/background/layer10.png';
+    this.layers[0].image.src = '../assets/background/layer1.png';
+    this.layers[1].image.src = '../assets/background/layer2.png';
+    this.layers[2].image.src = '../assets/background/layer3.png';
+    this.layers[3].image.src = '../assets/background/layer4.png';
+    this.layers[4].image.src = '../assets/background/layer5.png';
+    this.layers[5].image.src = '../assets/background/layer6.png';
+    this.layers[6].image.src = '../assets/background/layer7.png';
+    this.layers[7].image.src = '../assets/background/layer8.png';
+    this.layers[8].image.src = '../assets/background/layer9.png';
+    this.layers[9].image.src = '../assets/background/layer10.png';
     this.width = 1856;
     this.height = 793;
   }
@@ -694,12 +694,12 @@ var Enemy = /*#__PURE__*/function () {
     this.attackJumpSpeed = 28;
     this.gravity = 3;
     this.ground = 678;
-    this.land = true;
-    this.image = image.image; // this.image = new Image();
-    // this.image.src = 'assets/big-monster.png';
+    this.land = true; // this.image = image.image;
 
+    this.image = new Image();
+    this.image.src = '../assets/big-monster.png';
     this.image2 = new Image();
-    this.image2.src = 'assets/explosion-4.png';
+    this.image2.src = '../assets/explosion-4.png';
     this.useImg = this.image;
     this.srcWidth = 32;
     this.srcHeight = 35;
@@ -943,22 +943,22 @@ var Game = /*#__PURE__*/function () {
       width: 50,
       height: 37
     };
-    characterImg.image.src = 'assets/adventurer-Sheet.png';
-    characterImg.image2.src = 'assets/adventurer-bow-Sheet.png';
+    characterImg.image.src = '../assets/adventurer-Sheet.png';
+    characterImg.image2.src = '../assets/adventurer-bow-Sheet.png';
     this.characterImg = characterImg;
     var arrowImg = {
       image: new Image(),
       width: 100,
       height: 30
     };
-    arrowImg.image.src = 'assets/arrow.png';
+    arrowImg.image.src = '../assets/arrow.png';
     this.arrowImg = arrowImg;
     var enemyImg = {
       image: new Image(),
       width: 32 * 2,
       height: 25 * 2
     };
-    enemyImg.image.src = 'assets/big-monster.png';
+    enemyImg.image.src = '../assets/big-monster.png';
     this.enemyImg = enemyImg;
     this.gameOverScreen = new _gameover__WEBPACK_IMPORTED_MODULE_6__["default"](this.ctx, this);
     this.gameChoice = this.gameOverScreen.keyDown;
@@ -1201,7 +1201,7 @@ var GameOverScreen = /*#__PURE__*/function () {
     this.game = game;
     this.alpha = 0;
     this.image = new Image();
-    this.image.src = 'assets/GameOver.png';
+    this.image.src = '../assets/GameOver.png';
     this.width = 576;
     this.height = 432;
     this.srcX = 0;
