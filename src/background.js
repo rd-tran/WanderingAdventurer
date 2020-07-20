@@ -3,16 +3,16 @@ export default class Background {
     this.ctx = ctx;
     this.game = game;
     this.layers = [
-      {xPos: 0, speed: -8, image: new Image()},
-      {xPos: 0, speed: -7, image: new Image()},
-      {xPos: 0, speed: -7, image: new Image()},
-      {xPos: 0, speed: -6, image: new Image()},
-      {xPos: 0, speed: -5, image: new Image()},
-      {xPos: 0, speed: -4, image: new Image()},
-      {xPos: 0, speed: -3, image: new Image()},
-      {xPos: 0, speed: -3, image: new Image()},
-      {xPos: 0, speed: -2, image: new Image()},
-      {xPos: 0, speed: -1, image: new Image()}
+      {xPos: 0, speed: -8, alpha: 0.70, image: new Image()},
+      {xPos: 0, speed: -7, alpha: 0.95, image: new Image()},
+      {xPos: 0, speed: -7, alpha: 0.70, image: new Image()},
+      {xPos: 0, speed: -6, alpha: 0.70, image: new Image()},
+      {xPos: 0, speed: -5, alpha: 0.70, image: new Image()},
+      {xPos: 0, speed: -4, alpha: 0.70, image: new Image()},
+      {xPos: 0, speed: -3, alpha: 0.70, image: new Image()},
+      {xPos: 0, speed: -3, alpha: 0.70, image: new Image()},
+      {xPos: 0, speed: -2, alpha: 0.70, image: new Image()},
+      {xPos: 0, speed: -1, alpha: 0.70, image: new Image()}
     ]
     this.layers[0].image.src = './assets/background/layer1.png';
     this.layers[1].image.src = './assets/background/layer2.png';
@@ -32,6 +32,10 @@ export default class Background {
     const { ctx, width, height } = this;
 
     for (let i = this.layers.length - 1; i >= 0; i--) {
+      if (this.game.gameOver) {
+        this.ctx.globalAlpha = this.layers[i].alpha
+      }
+
       ctx.drawImage(this.layers[i].image,
         this.layers[i].xPos, 0, width, height
       );

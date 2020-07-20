@@ -2,6 +2,7 @@ export default class GameOverScreen {
   constructor(ctx, game) {
     this.ctx = ctx;
     this.game = game;
+    this.alpha = 0;
     this.image = new Image();
     this.image.src = './assets/GameOver.png';
     this.width = 576;
@@ -45,15 +46,21 @@ export default class GameOverScreen {
     this.frameIndex = (this.frameIndex + 1) % frameSets[choice].length;
     const [_, xInd] = frameSets[choice][this.frameIndex];
     this.srcX = xInd * width;
+    this.alpha += this.alpha * 0.10 || .05;
+    if (this.alpha > 1) {
+      this.alpha = 1;
+    }
   }
-
+  
   animate() {
     const { ctx, srcX, width, height } = this;
-
+    
     this.updateFrame();
+    this.ctx.globalAlpha = this.alpha;
+    console.log(this.alpha);
     ctx.drawImage(this.image,
       srcX, 0, width, height,
-      176, 0, width, height
+      176, 180.5, width, height
     );
   }
 }
