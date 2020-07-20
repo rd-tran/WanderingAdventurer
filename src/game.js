@@ -39,10 +39,10 @@ export default class Game {
     this.gameChoice = this.gameOverScreen.keyDown;
   }
 
-  start() {
-    this.animationDelayStart = 0;
-    this.spawnDelayStart = 0;
-    this.spawnTimeStart = 0;
+  start(timeStamp = 0) {
+    this.animationDelayStart = timeStamp;
+    this.spawnDelayStart = timeStamp;
+    this.spawnTimeStart = timeStamp;
     this.spawnRate = 2000;
   
     this.arrows = [];
@@ -66,7 +66,7 @@ export default class Game {
     document.addEventListener('keydown', this.keyDownListener);
     document.addEventListener('keyup', this.keyUpListener);
     
-    this.animate();
+    this.animate(timeStamp);
   }
 
   stop() {
@@ -109,11 +109,9 @@ export default class Game {
           for (let j = 0; j < this.enemies.length; j++) {
             const enemy = this.enemies[j];
             if (arrow.isCollideWith(enemy)) {
-              // debugger
               this.removeObject(arrow);
               this.removeObject(enemy);
               this.createObject(new Explosion(enemy, this.ctx));
-              // enemy.changeAnimation('die');
               continueAnimation = false;
               i -= 1;
               break;

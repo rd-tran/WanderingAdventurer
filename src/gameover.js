@@ -29,8 +29,8 @@ export default class GameOverScreen {
       this.changeAnimation(choice);
     } else if (e.code === 'Enter') {
       if (this.choice === 'yes') {
-        this.game.start();
         document.removeEventListener('keydown', this.game.gameChoice);
+        this.game.start(e.timeStamp);
       }
     }
   }
