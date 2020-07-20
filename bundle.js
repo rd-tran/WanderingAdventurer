@@ -112,15 +112,9 @@ var Arrow = /*#__PURE__*/function () {
     this.y = player.y + this.player.height / 2;
     this.srcX = 0;
     this.speed = this.player.runSpeed + 30;
-    this.image = image.image; // this.image = new Image();
-    // this.image.src = 'assets/arrow.png';
-
+    this.image = image.image;
     this.srcWidth = image.width;
-    this.srcHeight = image.height; // this.srcWidth = 100;
-    // this.srcHeight = 30;
-
-    this.width = this.srcWidth;
-    this.height = this.srcHeight;
+    this.srcHeight = image.height;
     this.frameIndex = 0;
     this.frameSet = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 4], [0, 4], [0, 4], [0, 4], [0, 4], [0, 4], [0, 4], [0, 4], [0, 4], [0, 4], [0, 4], [0, 4], [0, 5], [0, 5], [0, 5], [0, 5], [0, 5], [0, 5], [0, 5], [0, 5], [0, 5], [0, 5], [0, 5], [0, 5], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 7], [0, 7], [0, 7], [0, 7], [0, 7], [0, 7], [0, 7], [0, 7], [0, 7], [0, 7], [0, 7], [0, 7], [0, 8], [0, 8], [0, 8], [0, 8], [0, 8], [0, 8], [0, 8], [0, 8], [0, 8], [0, 8], [0, 8], [0, 8], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [0, 9], [0, 10], [0, 10], [0, 10], [0, 10], [0, 10], [0, 10], [0, 10], [0, 10], [0, 10], [0, 10], [0, 10], [0, 10], [0, 11], [0, 11], [0, 11], [0, 11], [0, 11], [0, 11], [0, 11], [0, 11], [0, 11], [0, 11], [0, 11], [0, 11], [0, 12], [0, 12], [0, 12], [0, 12], [0, 12], [0, 12], [0, 12], [0, 12], [0, 12], [0, 12], [0, 12], [0, 12], [0, 13], [0, 13], [0, 13], [0, 13], [0, 13], [0, 13], [0, 13], [0, 13], [0, 13], [0, 13], [0, 13], [0, 13], [0, 14], [0, 14], [0, 14], [0, 14], [0, 14], [0, 14], [0, 14], [0, 14], [0, 14], [0, 14], [0, 14], [0, 14]];
   }
@@ -142,19 +136,18 @@ var Arrow = /*#__PURE__*/function () {
   }, {
     key: "updateHitBox",
     value: function updateHitBox() {
-      this.xHitboxFront = this.x + this.width;
+      this.xHitboxFront = this.x + this.srcWidth;
       this.xHitboxBack = this.x;
       this.yHitboxTop = this.y;
-      this.yHitboxBottom = this.y + this.height;
+      this.yHitboxBottom = this.y + this.srcHeight;
     }
   }, {
     key: "updateFrame",
     value: function updateFrame() {
       var frameSet = this.frameSet,
-          width = this.width;
-      this.frameIndex = (this.frameIndex + 1) % frameSet.length; // const [_, xInd] = frameSet[this.frameIndex];
-
-      this.srcX = this.frameIndex * width;
+          srcWidth = this.srcWidth;
+      this.frameIndex = (this.frameIndex + 1) % frameSet.length;
+      this.srcX = this.frameIndex * srcWidth;
       this.x += this.speed;
       this.updateHitBox();
     }
@@ -165,10 +158,8 @@ var Arrow = /*#__PURE__*/function () {
           image = this.image,
           srcX = this.srcX,
           srcWidth = this.srcWidth,
-          srcHeight = this.srcHeight,
-          width = this.width,
-          height = this.height;
-      ctx.drawImage(image, srcX, 0, srcWidth, srcHeight, this.x, this.y, width, height);
+          srcHeight = this.srcHeight;
+      ctx.drawImage(image, srcX, 0, srcWidth, srcHeight, this.x, this.y, srcWidth, srcHeight);
       this.updateFrame();
     }
   }]);
@@ -682,9 +673,7 @@ var Enemy = /*#__PURE__*/function () {
 
     this.ctx = ctx;
     this.x = 923 + 200 + Math.floor(Math.random() * 200);
-    this.y = 793 - 125 - Math.floor(Math.random() * 100); // this.x = 130;
-    // this.y = 700;
-
+    this.y = 793 - 125 - Math.floor(Math.random() * 100);
     this.srcX = 0;
     this.speed = 15;
     this.neutralMoveSpeed = 10;
@@ -695,14 +684,9 @@ var Enemy = /*#__PURE__*/function () {
     this.gravity = 3;
     this.ground = 678;
     this.land = true;
-    this.image = image.image; // this.image = new Image();
-    // this.image.src = 'assets/big-monster.png';
-
-    this.image2 = new Image();
-    this.image2.src = 'assets/explosion-4.png';
-    this.useImg = this.image;
-    this.srcWidth = 32;
-    this.srcHeight = 35;
+    this.image = image.image;
+    this.srcWidth = image.width;
+    this.srcHeight = image.height;
     this.width = this.srcWidth * 2;
     this.height = this.srcHeight * 2;
     this.animation = 'idle';
@@ -724,16 +708,7 @@ var Enemy = /*#__PURE__*/function () {
       var topClip = this.yHitboxTop >= player.yHitboxTop && this.yHitboxTop <= player.yHitboxBottom;
       var bottomClip = this.yHitboxBottom >= player.yHitboxTop && this.yHitboxTop <= player.yHitboxBottom;
       var frontClip = this.xHitboxFront <= player.xHitboxFront && this.xHitboxFront >= player.xHitboxBack;
-      var backClip = this.xHitboxBack <= player.xHitboxFront && this.xHitboxBack >= player.xHitboxBack; // xHitboxFront + 27
-      // xHitboxBack + 7
-      // yHitboxTop - 36
-      // xHitboxFront + 36
-      // xHitboxBack + 0
-      // yHitboxTop - 29
-      // xHitboxFront + 48
-      // xHitboxBack + 0
-      // yHitboxTop - 24
-
+      var backClip = this.xHitboxBack <= player.xHitboxFront && this.xHitboxBack >= player.xHitboxBack;
       return (topClip || bottomClip) && (frontClip || backClip);
     }
   }, {
@@ -760,12 +735,6 @@ var Enemy = /*#__PURE__*/function () {
       if (this.animation !== animation) {
         this.frameIndex = 0;
         this.animation = animation;
-
-        if (this.animation === 'die') {
-          this.useImg = this.image2;
-        } else {
-          this.useImg = this.image;
-        }
       }
     }
   }, {
@@ -797,7 +766,7 @@ var Enemy = /*#__PURE__*/function () {
     key: "animate",
     value: function animate() {
       var ctx = this.ctx,
-          useImg = this.useImg,
+          image = this.image,
           srcX = this.srcX,
           x = this.x,
           y = this.y,
@@ -805,16 +774,10 @@ var Enemy = /*#__PURE__*/function () {
           srcHeight = this.srcHeight,
           width = this.width,
           height = this.height;
-
-      if (this.animation === 'die') {
-        ctx.drawImage(useImg, srcX, 0, 128, 128, x, y, 128, 128);
-      } else {
-        ctx.scale(-1, 1);
-        ctx.drawImage(useImg, srcX, 0, srcWidth, srcHeight, -x - width, y, width, height);
-        ctx.scale(-1, 1);
-      }
-
       this.updateHitBox();
+      ctx.scale(-1, 1);
+      ctx.drawImage(image, srcX, 0, srcWidth, srcHeight, -x - width, y, width, height);
+      ctx.scale(-1, 1);
       this.updateFrame();
     }
   }]);
@@ -855,18 +818,18 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var Explosion = /*#__PURE__*/function () {
-  function Explosion(enemy, ctx) {
+  function Explosion(enemy, ctx, image) {
     _classCallCheck(this, Explosion);
 
     this.ctx = ctx;
     this.x = enemy.x;
     this.y = enemy.y;
     this.srcX = 0;
-    this.image = enemy.image2;
+    this.image = image.image;
+    this.width = image.width;
+    this.height = image.height;
     this.frameIndex = 0;
     this.frameSets = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8], [0, 9], [0, 10], [0, 11]];
-    this.width = 128;
-    this.height = 128;
   }
 
   _createClass(Explosion, [{
@@ -955,11 +918,18 @@ var Game = /*#__PURE__*/function () {
     this.arrowImg = arrowImg;
     var enemyImg = {
       image: new Image(),
-      width: 32 * 2,
-      height: 25 * 2
+      width: 32,
+      height: 35
     };
     enemyImg.image.src = 'assets/big-monster.png';
     this.enemyImg = enemyImg;
+    var explosionImg = {
+      image: new Image(),
+      width: 128,
+      height: 128
+    };
+    explosionImg.image.src = 'assets/explosion-4.png';
+    this.explosionImg = explosionImg;
     this.gameOverScreen = new _gameover__WEBPACK_IMPORTED_MODULE_6__["default"](this.ctx, this);
     this.gameChoice = this.gameOverScreen.keyDown;
   }
@@ -1047,7 +1017,7 @@ var Game = /*#__PURE__*/function () {
               if (arrow.isCollideWith(enemy)) {
                 this.removeObject(arrow);
                 this.removeObject(enemy);
-                this.createObject(new _explosion__WEBPACK_IMPORTED_MODULE_5__["default"](enemy, this.ctx));
+                this.createObject(new _explosion__WEBPACK_IMPORTED_MODULE_5__["default"](enemy, this.ctx, this.explosionImg));
                 continueAnimation = false;
                 i -= 1;
                 break;
@@ -1074,7 +1044,7 @@ var Game = /*#__PURE__*/function () {
           } else if (enemy.isCollideWith(this.characterSprite)) {
             if (this.characterSprite.slashing) {
               this.removeObject(enemy);
-              this.createObject(new _explosion__WEBPACK_IMPORTED_MODULE_5__["default"](enemy, this.ctx));
+              this.createObject(new _explosion__WEBPACK_IMPORTED_MODULE_5__["default"](enemy, this.ctx, this.explosionImg));
             } else {
               this.player.die();
               this.gameOver = true;
