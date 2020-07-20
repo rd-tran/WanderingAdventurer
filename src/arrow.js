@@ -7,7 +7,7 @@ export default class Arrow {
     this.srcX = 0;
     this.speed = this.player.runSpeed + 30;
     this.image = new Image();
-    this.image.src = './assets/test-arrow-2.png';
+    this.image.src = './assets/arrow.png';
     // this.image.src = './assets/arrow.png';
     this.srcWidth = 100;
     this.srcHeight = 30;
@@ -48,7 +48,6 @@ export default class Arrow {
                       this.xHitboxFront <= enemy.xHitboxBack;
     const backClip = this.xHitboxBack >= enemy.xHitboxFront &&
                      this.xHitboxBack <= enemy.xHitboxBack;
-    debugger
     return (topClip || bottomClip) && (frontClip || backClip);
   }
   
@@ -70,7 +69,7 @@ export default class Arrow {
 
   animate() {
     const { ctx, image, srcX, srcWidth, srcHeight, width, height } = this;
-    debugger
+
     ctx.drawImage(image,
       srcX, 0, srcWidth, srcHeight,
       this.x, this.y, width, height

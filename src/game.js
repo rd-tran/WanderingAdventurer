@@ -4,49 +4,19 @@ import Controller from './controller';
 import Background from './background';
 import Enemy from './enemy.js';
 import Explosion from './explosion';
+import GameOverScreen from './gameover';
 
 export default class Game {
   constructor(ctx) {
     this.ctx = ctx;
-    this.animationDelayStart = 0;
-    this.spawnDelayStart = 0;
-    this.spawnTimeStart = 0;
-    this.spawnRate = 2000;
-    const characterImg =  {
-      image: new Image(),
-      image2: new Image(),
-      width: 50,
-      height: 37
-      // width: 1400 / 7,
-      // height: 2368 / 16
-    };
-    characterImg.image.src = './assets/adventurer-test.png';
-    characterImg.image2.src = './assets/adventurer-bow-Sheet.png';
-  
-    this.arrows = [];
-    this.enemies = [];
-    this.explosions = [];
-    this.player = new Player(this, ctx, characterImg);
-    this.characterSprite = new Character(this.ctx, this.player, characterImg);
-    this.controller = new Controller(this.player);
-    this.createObject(new Enemy(this.ctx));
-    this.background = new Background(this.ctx, this);
-    this.gameOver = false;
-    
-    this.keyDownListener = (e) => {
-      this.controller.keyDown(e);
-    };
-    this.keyUpListener = (e) => {
-      this.controller.keyUp(e);
-    };
-    document.addEventListener('keydown', this.keyDownListener);
-    document.addEventListener('keyup', this.keyUpListener);
     // document.addEventListener('keydown', (e) => {
     //   this.controller.keyDown(e)
     // });
     // document.addEventListener('keyup', (e) => {
     //   this.controller.keyUp(e)
     // });
+    this.gameOverScreen = new GameOverScreen(this.ctx, this);
+    this.gameChoice = this.gameOverScreen.keyDown;
   }
 
   // keyDown(e) {
@@ -67,6 +37,40 @@ export default class Game {
   // }
 
   start() {
+    this.animationDelayStart = 0;
+    this.spawnDelayStart = 0;
+    this.spawnTimeStart = 0;
+    this.spawnRate = 2000;
+    const characterImg =  {
+      image: new Image(),
+      image2: new Image(),
+      width: 50,
+      height: 37
+      // width: 1400 / 7,
+      // height: 2368 / 16
+    };
+    characterImg.image.src = './assets/adventurer-Sheet.png';
+    characterImg.image2.src = './assets/adventurer-bow-Sheet.png';
+  
+    this.arrows = [];
+    this.enemies = [];
+    this.explosions = [];
+    this.player = new Player(this, this.ctx, characterImg);
+    this.characterSprite = new Character(this.ctx, this.player, characterImg);
+    this.controller = new Controller(this.player);
+    this.createObject(new Enemy(this.ctx));
+    this.background = new Background(this.ctx, this);
+    this.gameOver = false;
+    
+    this.keyDownListener = (e) => {
+      this.controller.keyDown(e);
+    };
+    this.keyUpListener = (e) => {
+      this.controller.keyUp(e);
+    };
+    document.addEventListener('keydown', this.keyDownListener);
+    document.addEventListener('keyup', this.keyUpListener);
+    
     this.animate();
   }
 
@@ -170,14 +174,11 @@ export default class Game {
     if (!this.gameOver) {
       const animationDelay = timeStamp - this.animationDelayStart;
       const spawnDelay = timeStamp - this.spawnDelayStart;
-      // const increaseSpawnRate = (timeStamp - this.spawnTimeStart) >= 500;
-      const increaseSpawnRate = (timeStamp - this.spawnTimeStart) >= 15000;
-      if (increaseSpawnRate && this.spawnRate !== 1000) {
+      const increaseSpawnRate = (timeStamp - this.spawnTimeStart) >= 10000;
+      if (increaseSpawnRate && this.spawnRate !== 750) {
         this.spawnRate -= 250;
         this.spawnTimeStart = timeStamp;
-      } /* else if (this.spawnRate === 1000) {
-        this.gameOver = true;
-      } */
+      }
 
       if (spawnDelay >= this.spawnRate) {
         this.spawnDelayStart = timeStamp;
@@ -191,7 +192,7 @@ export default class Game {
         this.animateArrows();
         this.animateEnemies();
         this.animateExplosions();
-        this.characterSprite.animate(timeStamp);
+        this.characterSprite.animate();
       }
       
       this.reqId = requestAnimationFrame((timeStamp) => {
@@ -204,9 +205,11 @@ export default class Game {
         this.ctx.clearRect(0, 0, 928, 793);
         this.background.animate();
         this.characterSprite.animate(timeStamp);
+        this.gameOverScreen.animate();
       }
       document.removeEventListener('keydown', this.keyDownListener);
       document.removeEventListener('keyup', this.keyUpListener);
+      document.addEventListener('keydown', this.gameChoice);
       this.reqId = requestAnimationFrame((timeStamp) => {
         this.animate(timeStamp);
       });

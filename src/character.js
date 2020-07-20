@@ -2,7 +2,6 @@ export default class Character {
   constructor(ctx, player, sprite) {
     this.ctx = ctx;
     this.player = player;
-    this.cycle = 0;
     this.useImg = sprite.image;
     this.image = sprite.image;
     this.image2 = sprite.image2;
@@ -11,8 +10,6 @@ export default class Character {
     this.frameIndex = 0;
     this.srcWidth = sprite.width;
     this.srcHeight = sprite.height;
-    // this.frameWidth = player.frameWidth;
-    // this.frameHeight = player.frameHeight;
     this.width = player.width;
     this.height = player.height;
     this.animation = 'idle';
@@ -155,9 +152,9 @@ export default class Character {
       }
     } else if (this.animation === 'attack') {
       this.frameIndex += 1;
-      debugger
       if (this.frameIndex === frameSets[this.animation].length) {
         this.player.attacking = false;
+        this.slashing = false;
         if (this.player.jumping) {
           this.changeAnimation('jump');
           this.frameIndex = frameSets['jump'].length - 4;
@@ -241,6 +238,5 @@ export default class Character {
       srcX, srcY, srcWidth - 1, srcHeight - 1,
       player.x, player.y, width, height
     );
-    // this.updateHitbox();
   }
 }
