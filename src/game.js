@@ -29,11 +29,19 @@ export default class Game {
 
     const enemyImg = {
       image: new Image(),
-      width: 32 * 2,
-      height: 25 * 2
+      width: 32,
+      height: 35
     }
     enemyImg.image.src = 'assets/big-monster.png';
     this.enemyImg = enemyImg;
+
+    const explosionImg = {
+      image: new Image(),
+      width: 128,
+      height: 128
+    }
+    explosionImg.image.src = 'assets/explosion-4.png';
+    this.explosionImg = explosionImg;
     
     this.gameOverScreen = new GameOverScreen(this.ctx, this);
     this.gameChoice = this.gameOverScreen.keyDown;
@@ -111,7 +119,9 @@ export default class Game {
             if (arrow.isCollideWith(enemy)) {
               this.removeObject(arrow);
               this.removeObject(enemy);
-              this.createObject(new Explosion(enemy, this.ctx));
+              this.createObject(
+                new Explosion(enemy, this.ctx, this.explosionImg)
+              );
               continueAnimation = false;
               i -= 1;
               break;
@@ -136,7 +146,9 @@ export default class Game {
         } else if (enemy.isCollideWith(this.characterSprite)) {
           if (this.characterSprite.slashing) {
             this.removeObject(enemy);
-            this.createObject(new Explosion(enemy, this.ctx));
+            this.createObject(
+              new Explosion(enemy, this.ctx, this.explosionImg)
+            );
           } else {
             this.player.die();
             this.gameOver = true;

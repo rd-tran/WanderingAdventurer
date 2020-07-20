@@ -7,14 +7,8 @@ export default class Arrow {
     this.srcX = 0;
     this.speed = this.player.runSpeed + 30;
     this.image = image.image;
-    // this.image = new Image();
-    // this.image.src = 'assets/arrow.png';
     this.srcWidth = image.width;
     this.srcHeight = image.height;
-    // this.srcWidth = 100;
-    // this.srcHeight = 30;
-    this.width = this.srcWidth;
-    this.height = this.srcHeight;
     this.frameIndex = 0;
     this.frameSet = [
       [0, 0], [0, 0], [0, 0], [0, 0],
@@ -82,27 +76,26 @@ export default class Arrow {
   }
   
   updateHitBox() {
-    this.xHitboxFront = this.x + this.width;
+    this.xHitboxFront = this.x + this.srcWidth;
     this.xHitboxBack = this.x;
     this.yHitboxTop = this.y;
-    this.yHitboxBottom = this.y + this.height;
+    this.yHitboxBottom = this.y + this.srcHeight;
   }
   
   updateFrame() {
-    const { frameSet, width } = this;
+    const { frameSet, srcWidth } = this;
     this.frameIndex = (this.frameIndex + 1) % frameSet.length;
-    // const [_, xInd] = frameSet[this.frameIndex];
-    this.srcX = this.frameIndex * width;
+    this.srcX = this.frameIndex * srcWidth;
     this.x += this.speed;
     this.updateHitBox();
   }
 
   animate() {
-    const { ctx, image, srcX, srcWidth, srcHeight, width, height } = this;
+    const { ctx, image, srcX, srcWidth, srcHeight } = this;
 
     ctx.drawImage(image,
       srcX, 0, srcWidth, srcHeight,
-      this.x, this.y, width, height
+      this.x, this.y, srcWidth, srcHeight
     );
     this.updateFrame();
   }

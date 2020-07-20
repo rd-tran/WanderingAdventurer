@@ -1,17 +1,17 @@
 export default class Explosion {
-  constructor(enemy, ctx) {
+  constructor(enemy, ctx, image) {
     this.ctx = ctx;
     this.x = enemy.x;
     this.y = enemy.y;
     this.srcX = 0;
-    this.image = enemy.image2;
+    this.image = image.image;
+    this.width = image.width;
+    this.height = image.height;
     this.frameIndex = 0;
     this.frameSets = [
       [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5],[0, 6], [0, 7],[0, 8],
       [0, 9], [0, 10], [0, 11]
      ];
-    this.width = 128;
-    this.height = 128;
   }
 
   updateFrame() {

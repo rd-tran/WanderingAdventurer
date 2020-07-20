@@ -3,8 +3,6 @@ export default class Enemy {
     this.ctx = ctx;
     this.x = 923 + 200 + Math.floor(Math.random() * 200);
     this.y = 793 - 125 - Math.floor(Math.random() * 100);
-    // this.x = 130;
-    // this.y = 700;
     this.srcX = 0;
     this.speed = 15;
     this.neutralMoveSpeed = 10;
@@ -16,13 +14,8 @@ export default class Enemy {
     this.ground = 678;
     this.land = true;
     this.image = image.image;
-    // this.image = new Image();
-    // this.image.src = 'assets/big-monster.png';
-    this.image2 = new Image();
-    this.image2.src = 'assets/explosion-4.png';
-    this.useImg = this.image;
-    this.srcWidth = 32;
-    this.srcHeight = 35;
+    this.srcWidth = image.width;
+    this.srcHeight = image.height;
     this.width = this.srcWidth * 2;
     this.height = this.srcHeight * 2;
     this.animation = 'idle';
@@ -48,16 +41,6 @@ export default class Enemy {
                       this.xHitboxFront >= player.xHitboxBack;
     const backClip = this.xHitboxBack <= player.xHitboxFront &&
                      this.xHitboxBack >= player.xHitboxBack;
-
-    // xHitboxFront + 27
-    // xHitboxBack + 7
-    // yHitboxTop - 36
-    // xHitboxFront + 36
-    // xHitboxBack + 0
-    // yHitboxTop - 29
-    // xHitboxFront + 48
-    // xHitboxBack + 0
-    // yHitboxTop - 24
     
     return (topClip || bottomClip) && (frontClip || backClip);
   }
@@ -83,11 +66,6 @@ export default class Enemy {
     if (this.animation !== animation) {
       this.frameIndex = 0;
       this.animation = animation;
-      if (this.animation === 'die') {
-        this.useImg = this.image2;
-      } else {
-        this.useImg = this.image
-      }
     }
   }
 
@@ -110,23 +88,16 @@ export default class Enemy {
 
   animate() {
     const {
-      ctx, useImg, srcX, x, y, srcWidth, srcHeight, width, height
+      ctx, image, srcX, x, y, srcWidth, srcHeight, width, height
     } = this;
-    
-    if (this.animation === 'die') {
-      ctx.drawImage(useImg,
-        srcX, 0, 128, 128,
-        x, y, 128, 128
-        );
-      } else {
-        ctx.scale(-1, 1);
-        ctx.drawImage(useImg,
-          srcX, 0, srcWidth, srcHeight,
-        -x - width, y, width, height
-        );
-        ctx.scale(-1, 1);
-      }
+
     this.updateHitBox();
+    ctx.scale(-1, 1);
+    ctx.drawImage(image,
+      srcX, 0, srcWidth, srcHeight,
+    -x - width, y, width, height
+    );
+    ctx.scale(-1, 1);
     this.updateFrame();
   }
 }
