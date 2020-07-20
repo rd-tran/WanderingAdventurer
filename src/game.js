@@ -9,12 +9,32 @@ import GameOverScreen from './gameover';
 export default class Game {
   constructor(ctx) {
     this.ctx = ctx;
-    // document.addEventListener('keydown', (e) => {
-    //   this.controller.keyDown(e)
-    // });
-    // document.addEventListener('keyup', (e) => {
-    //   this.controller.keyUp(e)
-    // });
+    const characterImg =  {
+      image: new Image(),
+      image2: new Image(),
+      width: 50,
+      height: 37
+    };
+    characterImg.image.src = 'assets/adventurer-Sheet.png';
+    characterImg.image2.src = 'assets/adventurer-bow-Sheet.png';
+    this.characterImg = characterImg;
+
+    const arrowImg = {
+      image: new Image(),
+      width: 100,
+      height: 30
+    }
+    arrowImg.image.src = 'assets/arrow.png';
+    this.arrowImg = arrowImg;
+
+    const enemyImg = {
+      image: new Image(),
+      width: 32 * 2,
+      height: 25 * 2
+    }
+    enemyImg.image.src = 'assets/big-monster.png';
+    this.enemyImg = enemyImg;
+    
     this.gameOverScreen = new GameOverScreen(this.ctx, this);
     this.gameChoice = this.gameOverScreen.keyDown;
   }
@@ -24,22 +44,16 @@ export default class Game {
     this.spawnDelayStart = 0;
     this.spawnTimeStart = 0;
     this.spawnRate = 2000;
-    const characterImg =  {
-      image: new Image(),
-      image2: new Image(),
-      width: 50,
-      height: 37
-    };
-    characterImg.image.src = 'assets/adventurer-Sheet.png';
-    characterImg.image2.src = 'assets/adventurer-bow-Sheet.png';
   
     this.arrows = [];
     this.enemies = [];
     this.explosions = [];
-    this.player = new Player(this, this.ctx, characterImg);
-    this.characterSprite = new Character(this.ctx, this.player, characterImg);
+    this.player = new Player(this, this.ctx, this.characterImg);
+    this.characterSprite = new Character(
+      this.ctx, this.player, this.characterImg
+    );
     this.controller = new Controller(this.player);
-    this.createObject(new Enemy(this.ctx));
+    this.createObject(new Enemy(this.ctx, this.enemyImg));
     this.background = new Background(this.ctx, this);
     this.gameOver = false;
     
@@ -163,7 +177,7 @@ export default class Game {
 
       if (spawnDelay >= this.spawnRate) {
         this.spawnDelayStart = timeStamp;
-        this.createObject(new Enemy(this.ctx));
+        this.createObject(new Enemy(this.ctx, this.enemyImg));
       }
 
       if (animationDelay >= 32) {

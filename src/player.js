@@ -75,7 +75,7 @@ export default class Player {
   }
 
   shoot() {
-    this.game.createObject(new Arrow(this, this.ctx));
+    this.game.createObject(new Arrow(this, this.ctx, this.game.arrowImg));
   }
 
   die() {

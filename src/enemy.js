@@ -1,5 +1,5 @@
 export default class Enemy {
-  constructor(ctx) {
+  constructor(ctx, image) {
     this.ctx = ctx;
     this.x = 923 + 200 + Math.floor(Math.random() * 200);
     this.y = 793 - 125 - Math.floor(Math.random() * 100);
@@ -15,8 +15,9 @@ export default class Enemy {
     this.gravity = 3;
     this.ground = 678;
     this.land = true;
-    this.image = new Image();
-    this.image.src = 'assets/big-monster.png';
+    this.image = image.image;
+    // this.image = new Image();
+    // this.image.src = 'assets/big-monster.png';
     this.image2 = new Image();
     this.image2.src = 'assets/explosion-4.png';
     this.useImg = this.image;

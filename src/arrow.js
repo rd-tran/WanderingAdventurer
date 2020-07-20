@@ -1,15 +1,18 @@
 export default class Arrow {
-  constructor(player, ctx) {
+  constructor(player, ctx, image) {
     this.ctx = ctx;
     this.player = player;
     this.x = player.x;
     this.y = player.y + (this.player.height / 2);
     this.srcX = 0;
     this.speed = this.player.runSpeed + 30;
-    this.image = new Image();
-    this.image.src = 'assets/arrow.png';
-    this.srcWidth = 100;
-    this.srcHeight = 30;
+    this.image = image.image;
+    // this.image = new Image();
+    // this.image.src = 'assets/arrow.png';
+    this.srcWidth = image.width;
+    this.srcHeight = image.height;
+    // this.srcWidth = 100;
+    // this.srcHeight = 30;
     this.width = this.srcWidth;
     this.height = this.srcHeight;
     this.frameIndex = 0;
