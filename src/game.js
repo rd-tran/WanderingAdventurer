@@ -15,8 +15,8 @@ export default class Game {
       width: 50,
       height: 37
     };
-    characterImg.image.src = 'assets/adventurer-Sheet.png';
-    characterImg.image2.src = 'assets/adventurer-bow-Sheet.png';
+    characterImg.image.src = '../assets/adventurer-Sheet.png';
+    characterImg.image2.src = '../assets/adventurer-bow-Sheet.png';
     this.characterImg = characterImg;
 
     const arrowImg = {
@@ -24,7 +24,7 @@ export default class Game {
       width: 100,
       height: 30
     }
-    arrowImg.image.src = 'assets/arrow.png';
+    arrowImg.image.src = '../assets/arrow.png';
     this.arrowImg = arrowImg;
 
     const enemyImg = {
@@ -32,7 +32,7 @@ export default class Game {
       width: 32 * 2,
       height: 25 * 2
     }
-    enemyImg.image.src = 'assets/big-monster.png';
+    enemyImg.image.src = '../assets/big-monster.png';
     this.enemyImg = enemyImg;
     
     this.gameOverScreen = new GameOverScreen(this.ctx, this);

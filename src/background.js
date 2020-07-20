@@ -14,16 +14,16 @@ export default class Background {
       {xPos: 0, speed: -2, alpha: 0.70, image: new Image()},
       {xPos: 0, speed: -1, alpha: 0.70, image: new Image()}
     ]
-    this.layers[0].image.src = 'assets/background/layer1.png';
-    this.layers[1].image.src = 'assets/background/layer2.png';
-    this.layers[2].image.src = 'assets/background/layer3.png';
-    this.layers[3].image.src = 'assets/background/layer4.png';
-    this.layers[4].image.src = 'assets/background/layer5.png';
-    this.layers[5].image.src = 'assets/background/layer6.png';
-    this.layers[6].image.src = 'assets/background/layer7.png';
-    this.layers[7].image.src = 'assets/background/layer8.png';
-    this.layers[8].image.src = 'assets/background/layer9.png';
-    this.layers[9].image.src = 'assets/background/layer10.png';
+    this.layers[0].image.src = '../assets/background/layer1.png';
+    this.layers[1].image.src = '../assets/background/layer2.png';
+    this.layers[2].image.src = '../assets/background/layer3.png';
+    this.layers[3].image.src = '../assets/background/layer4.png';
+    this.layers[4].image.src = '../assets/background/layer5.png';
+    this.layers[5].image.src = '../assets/background/layer6.png';
+    this.layers[6].image.src = '../assets/background/layer7.png';
+    this.layers[7].image.src = '../assets/background/layer8.png';
+    this.layers[8].image.src = '../assets/background/layer9.png';
+    this.layers[9].image.src = '../assets/background/layer10.png';
     this.width = 1856;
     this.height = 793;
   }
