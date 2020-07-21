@@ -20,7 +20,12 @@ export default class GameOverScreen {
         [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3]
       ]
     }
+    this.display = this.display.bind(this);
     this.keyDown = this.keyDown.bind(this);
+  }
+
+  display() {
+    document.addEventListener('keydown', this.keyDown);
   }
 
   keyDown(e) {
@@ -28,9 +33,12 @@ export default class GameOverScreen {
       const choice = this.choice === 'yes' ? 'no' : 'yes';
       this.changeAnimation(choice);
     } else if (e.code === 'Enter') {
+      document.removeEventListener('keydown', this.keyDown);
       if (this.choice === 'yes') {
-        document.removeEventListener('keydown', this.game.gameChoice);
+        console.log('something')
         this.game.start(e.timeStamp);
+      } else {
+        this.game.startMenu.display();
       }
     }
   }

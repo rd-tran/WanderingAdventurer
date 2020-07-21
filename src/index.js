@@ -1,3 +1,4 @@
+import StartMenu from './start_menu';
 import Game from './game';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -6,8 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   canvas.height = 793;
   const ctx = canvas.getContext('2d');
 
+  const startMenu = new StartMenu();
   const game = new Game(ctx);
-  game.start();
+  // game.start();
 
   let count = 0;
   count++;

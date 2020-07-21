@@ -4,6 +4,7 @@ import Controller from './controller';
 import Background from './background';
 import Enemy from './enemy.js';
 import Explosion from './explosion';
+import StartMenu from './start_menu';
 import GameOverScreen from './gameover';
 
 export default class Game {
@@ -42,9 +43,12 @@ export default class Game {
     }
     explosionImg.image.src = 'assets/explosion-4.png';
     this.explosionImg = explosionImg;
-    
+
+    this.startMenu = new StartMenu(this);
+    this.startMenu.display();
+
     this.gameOverScreen = new GameOverScreen(this.ctx, this);
-    this.gameChoice = this.gameOverScreen.keyDown;
+    // this.gameOverChoice = this.gameOverScreen.keyDown;
   }
 
   start(timeStamp = 0) {
@@ -77,8 +81,12 @@ export default class Game {
     this.animate(timeStamp);
   }
 
-  stop() {
-    window.cancelAnimationFrame(this.reqId);
+  initiateGameOver() {
+    this.gameOver = true;
+    document.removeEventListener('keydown', this.keyDownListener);
+    document.removeEventListener('keyup', this.keyUpListener);
+    this.gameOverScreen.display();
+    // document.addEventListener('keydown', this.gameOverChoice);
   }
 
   createObject(object) {
@@ -151,11 +159,8 @@ export default class Game {
             );
           } else {
             this.player.die();
-            this.gameOver = true;
+            this.initiateGameOver();
           }
-        } else if (enemy.isCollideWith(this.player)) {
-          this.gameOver = true;
-          break;
         } else {
           enemy.animate()
         }
@@ -212,9 +217,7 @@ export default class Game {
         this.characterSprite.animate(timeStamp);
         this.gameOverScreen.animate();
       }
-      document.removeEventListener('keydown', this.keyDownListener);
-      document.removeEventListener('keyup', this.keyUpListener);
-      document.addEventListener('keydown', this.gameChoice);
+      
       this.reqId = requestAnimationFrame((timeStamp) => {
         this.animate(timeStamp);
       });
