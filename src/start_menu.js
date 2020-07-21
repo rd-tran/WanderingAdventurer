@@ -15,6 +15,7 @@ export default class StartMenu {
     if (e.code === 'Enter') {
       this.startMenu.classList.add('hidden')
       document.removeEventListener('keydown', this.keyDown);
+      this.game.ctx.clearRect(0, 0, 928, 793);
       this.game.start(e.timeStamp);
     }
   }

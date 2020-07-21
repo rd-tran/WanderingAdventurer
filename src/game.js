@@ -48,7 +48,6 @@ export default class Game {
     this.startMenu.display();
 
     this.gameOverScreen = new GameOverScreen(this.ctx, this);
-    // this.gameOverChoice = this.gameOverScreen.keyDown;
   }
 
   start(timeStamp = 0) {
@@ -78,6 +77,7 @@ export default class Game {
     document.addEventListener('keydown', this.keyDownListener);
     document.addEventListener('keyup', this.keyUpListener);
     
+    this.ctx.globalAlpha = 1;
     this.animate(timeStamp);
   }
 
@@ -86,7 +86,6 @@ export default class Game {
     document.removeEventListener('keydown', this.keyDownListener);
     document.removeEventListener('keyup', this.keyUpListener);
     this.gameOverScreen.display();
-    // document.addEventListener('keydown', this.gameOverChoice);
   }
 
   createObject(object) {

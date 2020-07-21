@@ -33,9 +33,9 @@ export default class GameOverScreen {
       const choice = this.choice === 'yes' ? 'no' : 'yes';
       this.changeAnimation(choice);
     } else if (e.code === 'Enter') {
+      this.alpha = 0;
       document.removeEventListener('keydown', this.keyDown);
       if (this.choice === 'yes') {
-        console.log('something')
         this.game.start(e.timeStamp);
       } else {
         this.game.startMenu.display();
@@ -63,7 +63,7 @@ export default class GameOverScreen {
   
   animate() {
     const { ctx, srcX, width, height } = this;
-    
+
     this.updateFrame();
     this.ctx.globalAlpha = this.alpha;
     ctx.drawImage(this.image,

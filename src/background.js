@@ -33,21 +33,24 @@ export default class Background {
 
     for (let i = this.layers.length - 1; i >= 0; i--) {
       if (this.game.gameOver) {
-        this.ctx.globalAlpha = this.layers[i].alpha
-      }
+        this.ctx.globalAlpha = this.layers[i].alpha;
 
-      ctx.drawImage(this.layers[i].image,
-        this.layers[i].xPos, 0, width, height
-      );
-
-      if (this.game.gameOver) {
+        ctx.drawImage(this.layers[i].image,
+          this.layers[i].xPos, 0, width, height
+        );
+        
         if (this.layers[i].speed < 0) {
           this.layers[i].speed =
-            this.layers[i].speed - (this.layers[i].speed * .05);
+          this.layers[i].speed - (this.layers[i].speed * .05);
           if (this.layers[i].speed > 0) {
             this.layers[i].speed = 0;
           }
         }
+      } else {
+        console.log(this.ctx.globalAlpha)
+        ctx.drawImage(this.layers[i].image,
+          this.layers[i].xPos, 0, width, height
+        );
       }
       
       this.layers[i].xPos += this.layers[i].speed;
