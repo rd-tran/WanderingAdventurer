@@ -874,12 +874,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./background */ "./src/background.js");
 /* harmony import */ var _enemy_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./enemy.js */ "./src/enemy.js");
 /* harmony import */ var _explosion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./explosion */ "./src/explosion.js");
-/* harmony import */ var _gameover__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./gameover */ "./src/gameover.js");
+/* harmony import */ var _start_menu__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./start_menu */ "./src/start_menu.js");
+/* harmony import */ var _gameover__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./gameover */ "./src/gameover.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -924,8 +926,9 @@ var Game = /*#__PURE__*/function () {
     };
     explosionImg.image.src = 'assets/explosion-4.png';
     this.explosionImg = explosionImg;
-    this.gameOverScreen = new _gameover__WEBPACK_IMPORTED_MODULE_6__["default"](this.ctx, this);
-    this.gameChoice = this.gameOverScreen.keyDown;
+    this.startMenu = new _start_menu__WEBPACK_IMPORTED_MODULE_6__["default"](this);
+    this.startMenu.display();
+    this.gameOverScreen = new _gameover__WEBPACK_IMPORTED_MODULE_7__["default"](this.ctx, this); // this.gameOverChoice = this.gameOverScreen.keyDown;
   }
 
   _createClass(Game, [{
@@ -961,9 +964,12 @@ var Game = /*#__PURE__*/function () {
       this.animate(timeStamp);
     }
   }, {
-    key: "stop",
-    value: function stop() {
-      window.cancelAnimationFrame(this.reqId);
+    key: "initiateGameOver",
+    value: function initiateGameOver() {
+      this.gameOver = true;
+      document.removeEventListener('keydown', this.keyDownListener);
+      document.removeEventListener('keyup', this.keyUpListener);
+      this.gameOverScreen.display(); // document.addEventListener('keydown', this.gameOverChoice);
     }
   }, {
     key: "createObject",
@@ -1041,11 +1047,8 @@ var Game = /*#__PURE__*/function () {
               this.createObject(new _explosion__WEBPACK_IMPORTED_MODULE_5__["default"](enemy, this.ctx, this.explosionImg));
             } else {
               this.player.die();
-              this.gameOver = true;
+              this.initiateGameOver();
             }
-          } else if (enemy.isCollideWith(this.player)) {
-            this.gameOver = true;
-            break;
           } else {
             enemy.animate();
           }
@@ -1112,9 +1115,6 @@ var Game = /*#__PURE__*/function () {
           this.gameOverScreen.animate();
         }
 
-        document.removeEventListener('keydown', this.keyDownListener);
-        document.removeEventListener('keyup', this.keyUpListener);
-        document.addEventListener('keydown', this.gameChoice);
         this.reqId = requestAnimationFrame(function (timeStamp) {
           _this2.animate(timeStamp);
         });
@@ -1175,19 +1175,29 @@ var GameOverScreen = /*#__PURE__*/function () {
       yes: [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1]],
       no: [[0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3], [0, 3]]
     };
+    this.display = this.display.bind(this);
     this.keyDown = this.keyDown.bind(this);
   }
 
   _createClass(GameOverScreen, [{
+    key: "display",
+    value: function display() {
+      document.addEventListener('keydown', this.keyDown);
+    }
+  }, {
     key: "keyDown",
     value: function keyDown(e) {
       if (e.code === 'KeyA' || e.code === 'KeyD') {
         var choice = this.choice === 'yes' ? 'no' : 'yes';
         this.changeAnimation(choice);
       } else if (e.code === 'Enter') {
+        document.removeEventListener('keydown', this.keyDown);
+
         if (this.choice === 'yes') {
-          document.removeEventListener('keydown', this.game.gameChoice);
+          console.log('something');
           this.game.start(e.timeStamp);
+        } else {
+          this.game.startMenu.display();
         }
       }
     }
@@ -1247,15 +1257,18 @@ var GameOverScreen = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./src/game.js");
+/* harmony import */ var _start_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./start_menu */ "./src/start_menu.js");
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game */ "./src/game.js");
+
 
 document.addEventListener('DOMContentLoaded', function () {
   var canvas = document.getElementById('gameDisplay');
   canvas.width = 928;
   canvas.height = 793;
   var ctx = canvas.getContext('2d');
-  var game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](ctx);
-  game.start();
+  var startMenu = new _start_menu__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  var game = new _game__WEBPACK_IMPORTED_MODULE_1__["default"](ctx); // game.start();
+
   var count = 0;
   count++;
 
@@ -1381,6 +1394,56 @@ var Player = /*#__PURE__*/function () {
   }]);
 
   return Player;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/start_menu.js":
+/*!***************************!*\
+  !*** ./src/start_menu.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StartMenu; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var StartMenu = /*#__PURE__*/function () {
+  function StartMenu(game) {
+    _classCallCheck(this, StartMenu);
+
+    this.game = game;
+    this.startMenu = document.getElementById('start-menu');
+    this.display = this.display.bind(this);
+    this.keyDown = this.keyDown.bind(this);
+  }
+
+  _createClass(StartMenu, [{
+    key: "display",
+    value: function display() {
+      this.startMenu.classList.remove('hidden');
+      document.addEventListener('keydown', this.keyDown);
+    }
+  }, {
+    key: "keyDown",
+    value: function keyDown(e) {
+      if (e.code === 'Enter') {
+        this.startMenu.classList.add('hidden');
+        document.removeEventListener('keydown', this.keyDown);
+        this.game.start(e.timeStamp);
+      }
+    }
+  }]);
+
+  return StartMenu;
 }();
 
 

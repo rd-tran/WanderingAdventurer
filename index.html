@@ -3,6 +3,7 @@
   <head>
     <title>JS Project</title>
     <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="./bundle.js"></script>
 
     <style>
@@ -11,18 +12,215 @@
         box-sizing: border-box;
         display: flex;
         justify-content: center;
+        font-family: 'Press Start 2P', cursive;
       }
       #gameDisplay {
-        margin: 25px;
-        display: block;
+        margin-top: 25px;
+        width: 928px;
+        height: 793px;
         border: 1px solid black;
+        box-sizing: border-box;
+      }
+      #start-menu {
+        margin-top: 25px;
+        width: 928px;
+        height: 793px;
+        color: white;
+        background-color: black;
+        border: 1px solid black;
+        box-sizing: border-box;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      #start-menu.hidden {
+        display: none;
+      }
+      .controls {
+        margin-top: 50px;
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .top-row {
+        width: fit-content;
+      }
+      .top-row .key {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .bottom-row {
+        display: flex;
+        flex-direction: row;
+      }
+      .bottom-row .key {
+        margin-right: 10px;
+      }
+      .bottom-row .key:last-child {
+        margin-right: 0;
+      }
+      .description {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+      }
+      .description-row {
+        display: flex;
+        flex-direction: row;
+      }
+      .details-container {
+        display: flex;
+        flex-direction: row;
+        margin-left: 15px;
+      }
+      .details {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .key {
+        margin-top: 10px;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid white;
+      }
+      .forward-slash {
+        width: 3px;
+        margin-top: 10px;
+        margin-left: 15px;
+        margin-right: 15px;
+        transform: rotate(15deg);
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid white;
       }
     </style>
   </head>
 
   <body>
     <main>
-      <canvas id="gameDisplay" width="200" height="100"></canvas>
+      <div id="start-menu">
+
+        <div class="enter-to-start container">
+          Press Enter to start
+          <div class="description">
+            <div class="description-row">
+              <div class="key">
+                Enter
+              </div>
+              <div class="details-container">
+                <div class="details">- Selection</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="controls-display">
+          
+          <div class="controls container">
+            Movement
+            <div class="layout container">
+              <div class="top-row container">
+                <div class="key">
+                  W
+                </div>
+              </div>
+  
+              <div class="bottom-row">
+                <div class="key">
+                  A
+                </div>
+                <div class="key">
+                  S
+                </div>
+                <div class="key">
+                  D
+                </div>
+              </div>
+            </div>
+  
+            <div class="description">
+              <div class="description-row">
+                <div class="key">
+                  W
+                </div>
+                <div class="forward-slash"></div>
+                <div class="key">
+                  S
+                </div>
+                <div class="details-container">
+                  <div class="details">- Jump</div>
+                  <div class="forward-slash"></div>
+                  <div class="details">Slide</div>
+                </div>
+              </div>
+  
+              <div class="description-row">
+                <div class="key">
+                  A
+                </div>
+                <div class="forward-slash"></div>
+                <div class="key">
+                  D
+                </div>
+                <div class="details-container">
+                  <div class="details">- Back</div>
+                  <div class="forward-slash"></div>
+                  <div class="details">Forward</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls container">
+            Attacks
+            <div class="layout container">
+              <div class="bottom-row">
+                <div class="key">
+                  J
+                </div>
+                <div class="key">
+                  K
+                </div>
+              </div>
+            </div>
+  
+            <div class="description">
+              <div class="description-row">
+                <div class="key">
+                  J
+                </div>
+                <div class="details-container">
+                  <div class="details">- Slash</div>
+                </div>
+              </div>
+  
+              <div class="description-row">
+                <div class="key">
+                  K
+                </div>
+                <div class="details-container">
+                  <div class="details">- Shoot</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+
+        </div>
+      </div>
+
+      <canvas id="gameDisplay" width="928" height="793"></canvas>
     </main>
   </body>
 </html>
