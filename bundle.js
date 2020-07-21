@@ -327,19 +327,19 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var Character = /*#__PURE__*/function () {
-  function Character(ctx, player, sprite) {
+  function Character(ctx, player, image) {
     _classCallCheck(this, Character);
 
     this.ctx = ctx;
     this.player = player;
-    this.useImg = sprite.image;
-    this.image = sprite.image;
-    this.image2 = sprite.image2;
+    this.useImg = image.image;
+    this.image = image.image;
+    this.image2 = image.image2;
     this.srcX = 0;
     this.srcY = 0;
     this.frameIndex = 0;
-    this.srcWidth = sprite.width;
-    this.srcHeight = sprite.height;
+    this.srcWidth = image.width;
+    this.srcHeight = image.height;
     this.width = player.width;
     this.height = player.height;
     this.animation = 'idle';
@@ -359,13 +359,7 @@ var Character = /*#__PURE__*/function () {
       run: [[-15, 20, 10, 0], [-15, 20, 10, 0], [-15, 21, 10, 0], [-15, 21, 10, 0], [-15, 24, 10, 0], [-15, 24, 10, 0], [-15, 20, 10, 0], [-15, 20, 10, 0], [-15, 21, 10, 0], [-15, 21, 10, 0], [-15, 24, 10, 0], [-15, 24, 10, 0]],
       jump: [[-15, 15, 12, 0], [-15, 15, 12, 0], [-17, 15, 12, 0], [-17, 15, 12, 0], [-15, 20, 7, -2], [-15, 20, 7, -2], [-15, 15, 7, -8], [-15, 15, 7, -8], [-15, 22, 7, -8], [-15, 22, 7, -8], [-13, 15, 14, -9], [-13, 15, 14, -9], [-17, 20, 11, -6], [-17, 20, 11, -6], [-17, 15, 13, 10], [-17, 15, 13, 10], [-16, 23, 7, -4], [-16, 23, 7, -4], [-16, 23, 7, -4], [-16, 23, 7, -4]],
       slide: [[-12, 15, 22, 0], [-12, 15, 22, 0], [-12, 15, 22, 0], [-12, 15, 22, 0], [-12, 15, 22, 0], [-12, 15, 22, 0], [-12, 15, 21, 0], [-12, 15, 21, 0], [-12, 15, 21, 0], [-12, 16, 20, 0], [-12, 16, 20, 0], [-12, 16, 20, 0], [-15, 18, 20, 0], [-15, 18, 20, 0], [-15, 18, 20, 0]],
-      attack: [[-17, 16, 15, 0], [-18, 16, 17, 0], [-1, 22, 0, 0], [-1, 22, 0, 0], [-1, 22, 0, 0], [-18, 16, 12, 0], [-20, 16, 12, 0], [-20, 16, 12, 0], [-3, 11, 7, 0], [-3, 11, 7, 0], [-3, 11, 7, 0], [-15, 21, 11, 0], [-15, 22, 11, 0], [0, 2, 13, 0], [0, 2, 13, 0], [0, 2, 13, 0], [-17, 16, 17, 0] // [-17, 16, 15, 0], [-18, 16, 17, 0],
-      // /* [-28, 15, 22, 0] */ [-1, 22, 0, 0],
-      // [-16, 16, 12, 0], [-17, 16, 12, 0], [-18, 16, 12, 0], [-20, 16, 12, 0], [-20, 16, 12, 0],
-      // /* [-38, 11, 36, 0] */ [-3, 11, 7, 0],
-      // [-17, 16, 16, 0], [-17, 16, 15, 0], [-15, 21, 11, 0], [-15, 22, 11, 0], /* [-48, 2, 36, 0] */ [0, 2, 13, 0],
-      // [-17, 16, 18, 0], [-17, 16, 17, 0], [-17, 16, 17, 0]
-      ],
+      attack: [[-17, 16, 15, 0], [-18, 16, 17, 0], [-1, 22, 0, 0], [-1, 22, 0, 0], [-1, 22, 0, 0], [-18, 16, 12, 0], [-20, 16, 12, 0], [-20, 16, 12, 0], [-3, 11, 7, 0], [-3, 11, 7, 0], [-3, 11, 7, 0], [-15, 21, 11, 0], [-15, 22, 11, 0], [0, 2, 13, 0], [0, 2, 13, 0], [0, 2, 13, 0], [-17, 16, 17, 0]],
       shoot: [[-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0]]
     };
   }
@@ -1298,8 +1292,7 @@ var Player = /*#__PURE__*/function () {
     this.game = game;
     this.ctx = ctx;
     this.x = 0;
-    this.y = 662; // 662
-
+    this.y = 662;
     this.width = 50 * 3;
     this.height = 37 * 3; // this.y = 793 - sprite.height * 3 - 20; // 662
 
