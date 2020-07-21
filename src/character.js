@@ -1,15 +1,15 @@
 export default class Character {
-  constructor(ctx, player, sprite) {
+  constructor(ctx, player, image) {
     this.ctx = ctx;
     this.player = player;
-    this.useImg = sprite.image;
-    this.image = sprite.image;
-    this.image2 = sprite.image2;
+    this.useImg = image.image;
+    this.image = image.image;
+    this.image2 = image.image2;
     this.srcX = 0;
     this.srcY = 0;
     this.frameIndex = 0;
-    this.srcWidth = sprite.width;
-    this.srcHeight = sprite.height;
+    this.srcWidth = image.width;
+    this.srcHeight = image.height;
     this.width = player.width;
     this.height = player.height;
     this.animation = 'idle';
@@ -103,12 +103,6 @@ export default class Character {
         [-15, 21, 11, 0], [-15, 22, 11, 0],
         [0, 2, 13, 0], [0, 2, 13, 0], [0, 2, 13, 0],
         [-17, 16, 17, 0],
-        // [-17, 16, 15, 0], [-18, 16, 17, 0],
-        // /* [-28, 15, 22, 0] */ [-1, 22, 0, 0],
-        // [-16, 16, 12, 0], [-17, 16, 12, 0], [-18, 16, 12, 0], [-20, 16, 12, 0], [-20, 16, 12, 0],
-        // /* [-38, 11, 36, 0] */ [-3, 11, 7, 0],
-        // [-17, 16, 16, 0], [-17, 16, 15, 0], [-15, 21, 11, 0], [-15, 22, 11, 0], /* [-48, 2, 36, 0] */ [0, 2, 13, 0],
-        // [-17, 16, 18, 0], [-17, 16, 17, 0], [-17, 16, 17, 0]
       ],
       shoot: [
         [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0], [-17, 16, 10, 0],
