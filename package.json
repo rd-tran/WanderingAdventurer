@@ -8,9 +8,7 @@
   "scripts": {
     "start": "npx webpack -w --mode=development",
     "predeploy": "npm run build",
-    "build": "webpack --mode=development",
-    "deploy": "npm run build && gh-pages -d dist",
-    "pages": "gh-pages -d dist"
+    "build": "webpack --mode=development"
   },
   "dependencies": {
     "@babel/core": "^7.10.2",
