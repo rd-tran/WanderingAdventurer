@@ -268,11 +268,8 @@ var Background = /*#__PURE__*/function () {
       for (var i = this.layers.length - 1; i >= 0; i--) {
         if (this.game.gameOver) {
           this.ctx.globalAlpha = this.layers[i].alpha;
-        }
+          ctx.drawImage(this.layers[i].image, this.layers[i].xPos, 0, width, height);
 
-        ctx.drawImage(this.layers[i].image, this.layers[i].xPos, 0, width, height);
-
-        if (this.game.gameOver) {
           if (this.layers[i].speed < 0) {
             this.layers[i].speed = this.layers[i].speed - this.layers[i].speed * .05;
 
@@ -280,6 +277,9 @@ var Background = /*#__PURE__*/function () {
               this.layers[i].speed = 0;
             }
           }
+        } else {
+          console.log(this.ctx.globalAlpha);
+          ctx.drawImage(this.layers[i].image, this.layers[i].xPos, 0, width, height);
         }
 
         this.layers[i].xPos += this.layers[i].speed;
@@ -928,7 +928,7 @@ var Game = /*#__PURE__*/function () {
     this.explosionImg = explosionImg;
     this.startMenu = new _start_menu__WEBPACK_IMPORTED_MODULE_6__["default"](this);
     this.startMenu.display();
-    this.gameOverScreen = new _gameover__WEBPACK_IMPORTED_MODULE_7__["default"](this.ctx, this); // this.gameOverChoice = this.gameOverScreen.keyDown;
+    this.gameOverScreen = new _gameover__WEBPACK_IMPORTED_MODULE_7__["default"](this.ctx, this);
   }
 
   _createClass(Game, [{
@@ -961,6 +961,7 @@ var Game = /*#__PURE__*/function () {
 
       document.addEventListener('keydown', this.keyDownListener);
       document.addEventListener('keyup', this.keyUpListener);
+      this.ctx.globalAlpha = 1;
       this.animate(timeStamp);
     }
   }, {
@@ -969,7 +970,7 @@ var Game = /*#__PURE__*/function () {
       this.gameOver = true;
       document.removeEventListener('keydown', this.keyDownListener);
       document.removeEventListener('keyup', this.keyUpListener);
-      this.gameOverScreen.display(); // document.addEventListener('keydown', this.gameOverChoice);
+      this.gameOverScreen.display();
     }
   }, {
     key: "createObject",
@@ -1191,10 +1192,10 @@ var GameOverScreen = /*#__PURE__*/function () {
         var choice = this.choice === 'yes' ? 'no' : 'yes';
         this.changeAnimation(choice);
       } else if (e.code === 'Enter') {
+        this.alpha = 0;
         document.removeEventListener('keydown', this.keyDown);
 
         if (this.choice === 'yes') {
-          console.log('something');
           this.game.start(e.timeStamp);
         } else {
           this.game.startMenu.display();
@@ -1438,6 +1439,7 @@ var StartMenu = /*#__PURE__*/function () {
       if (e.code === 'Enter') {
         this.startMenu.classList.add('hidden');
         document.removeEventListener('keydown', this.keyDown);
+        this.game.ctx.clearRect(0, 0, 928, 793);
         this.game.start(e.timeStamp);
       }
     }
