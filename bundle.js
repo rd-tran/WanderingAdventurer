@@ -399,6 +399,10 @@ var Character = /*#__PURE__*/function () {
         if (this.frameIndex > frameSets[this.animation].length - 1) {
           this.frameIndex = frameSets[this.animation].length - 4;
         }
+
+        if (this.player.land) {
+          this.frameIndex = 0;
+        }
       } else if (this.animation === 'attack') {
         this.frameIndex += 1;
 
@@ -1300,7 +1304,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var Player = /*#__PURE__*/function () {
-  function Player(game, ctx, sprite) {
+  function Player(game, ctx) {
     _classCallCheck(this, Player);
 
     this.game = game;
@@ -1369,9 +1373,9 @@ var Player = /*#__PURE__*/function () {
         if (this.y >= this.ground) {
           this.x += 7;
           this.y = this.ground;
-          this.land = true;
           this.jumpSpeed = 35;
           this.jumping = false;
+          this.land = true;
         }
       }
     }
