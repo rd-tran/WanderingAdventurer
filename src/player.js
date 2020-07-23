@@ -1,7 +1,7 @@
 import Arrow from './arrow';
 
 export default class Player {
-  constructor(game, ctx, sprite) {
+  constructor(game, ctx) {
     this.game = game;
     this.ctx = ctx;
     this.x = 0;
@@ -61,9 +61,10 @@ export default class Player {
       if (this.y >= this.ground) {
         this.x += 7;
         this.y = this.ground;
-        this.land = true;
         this.jumpSpeed = 35;
         this.jumping = false;
+        this.land = true;
+
       }
     }
   }

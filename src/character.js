@@ -144,6 +144,9 @@ export default class Character {
       if (this.frameIndex > frameSets[this.animation].length - 1) {
         this.frameIndex = frameSets[this.animation].length - 4; 
       }
+      if (this.player.land) {
+        this.frameIndex = 0;
+      }
     } else if (this.animation === 'attack') {
       this.frameIndex += 1;
       if (this.frameIndex === frameSets[this.animation].length) {
